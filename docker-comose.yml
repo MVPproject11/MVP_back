@@ -1,0 +1,5 @@
+services:
+  eleven-server:
+    image: 831926627674.dkr.ecr.ap-northeast-2.amazonaws.com/eleven-server
+    ports:
+      - 8080:8080
