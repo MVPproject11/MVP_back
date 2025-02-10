@@ -58,6 +58,17 @@ jobs:
           -t ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest \
           --push .
 
+      # EC2에 git pull을 통해 최신 docker-compose.yml 가져오기
+      - name: Update docker-compose file on EC2 via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/MVP_back
+            git pull origin main
+
       # EC2에 배포 (Docker Compose 사용)
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.2.0
