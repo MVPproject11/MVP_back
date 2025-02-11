@@ -1,8 +1,7 @@
 name: dev-deploy-actions
 on:
   push:
-    branches:
-      - develop
+    branches: [ "develop" ]
 
 jobs:
   build-test:
