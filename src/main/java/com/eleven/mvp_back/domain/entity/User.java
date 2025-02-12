@@ -1,7 +1,10 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -17,6 +20,28 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "email", nullable = false, unique = true, length = 50)
+    @Column(nullable = false, unique = true, length = 50)
     private String email;
+
+    @Column(nullable = false, length = 20)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Role role;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime updatedAt;
+
+    public static User of(String email, String password, Role role) {
+        return User.builder()
+                .email(email)
+                .password(password)
+                .role(role)
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
 }

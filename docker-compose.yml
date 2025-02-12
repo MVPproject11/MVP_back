@@ -9,10 +9,11 @@ services:
         condition: service_healthy
 
   eleven-db:
+    container_name: eleven-db
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      #MYSQL_DATABASE: elevendb
+      #MYSQL_DATABASE: eleven-db
     volumes:
       - ./mysql_data:/var/lib/mysql
     ports:
