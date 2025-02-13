@@ -47,10 +47,10 @@ public class Elder {
     @Column(length = 255)
     private String disease;
 
-    @Column(nullable = false, length = 255, columnDefinition = "단일선택")
+    @Column(nullable = false, length = 255) // 단일선택
     private Housemate housemate;
 
-    @Column(name = "symptoms_dementia", nullable = false, length = 255, columnDefinition = "복수선택 가능")
+    @Column(name = "symptoms_dementia", nullable = false, length = 255) // 복수선택
     private SymptomsDementia symptomsDementia;
 
     @Column(nullable = false)
