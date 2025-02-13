@@ -2,7 +2,6 @@ package com.eleven.mvp_back.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -51,6 +50,10 @@ public class SocialWorker {
     @MapsId
     @JoinColumn(name = "socialworker_id")
     private User user;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public static SocialWorker of(String centerName, String phoneNumber, boolean ownBathCar,
                                   String centerAddress, String centerGrade, Integer operationPeriod,
