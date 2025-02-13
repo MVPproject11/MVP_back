@@ -1,6 +1,11 @@
 services:
   eleven-server:
     image: 831926627674.dkr.ecr.ap-northeast-2.amazonaws.com/eleven-server
+    container_name: eleven-server
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - 8080:8080
     restart: always
@@ -13,7 +18,7 @@ services:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      #MYSQL_DATABASE: eleven-db
+      MYSQL_DATABASE: eleven_prod
     volumes:
       - ./mysql_data:/var/lib/mysql
     ports:
