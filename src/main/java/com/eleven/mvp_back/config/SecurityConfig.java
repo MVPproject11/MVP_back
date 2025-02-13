@@ -20,10 +20,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/swagger-ui/**",
-                                "/v3/api-docs/**"
+                                "/v3/api-docs/**",
+                                "/h2-console/**",
+                                "api/**"
                         ).permitAll()
                         .anyRequest().authenticated()
-                );
+                )
+                .headers(headers -> headers.frameOptions().disable());
         return http.build();
     }
 }
