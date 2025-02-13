@@ -1,7 +1,7 @@
 services:
   eleven-server:
     image: 831926627674.dkr.ecr.ap-northeast-2.amazonaws.com/eleven-server
-    container_name: eleven-server
+    container_name: mvp_back-eleven-server-1
     environment:
       SPRING_PROFILES_ACTIVE: prod
       MYSQL_USERNAME: ${MYSQL_USERNAME}
@@ -14,11 +14,11 @@ services:
         condition: service_healthy
 
   eleven-db:
-    container_name: eleven-db
+    container_name: mvp_back-eleven-db-1
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_DATABASE: eleven_prod
     volumes:
       - ./mysql_data:/var/lib/mysql
     ports:
