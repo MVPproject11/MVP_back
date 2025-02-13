@@ -25,7 +25,6 @@ public class SocialWorker {
     @Column(nullable = false, length = 13)
     private String phoneNumber;
 
-    @ColumnDefault("false")
     @Column(nullable = false)
     private boolean ownBathCar;
 
