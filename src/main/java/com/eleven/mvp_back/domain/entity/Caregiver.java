@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -51,6 +52,10 @@ public class Caregiver {
     private String mainCareer;
 
     private String introduction;
+
+    private LocalTime availableStartTime;
+
+    private LocalTime availableEndTime;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
