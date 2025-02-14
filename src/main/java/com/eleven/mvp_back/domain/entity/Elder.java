@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -54,6 +55,12 @@ public class Elder {
 
     @Column(nullable = false) // 복수선택
     private SymptomsDementia symptomsDementia;
+
+    @Column(name = "care_start_time")
+    private LocalTime careStartTime;
+
+    @Column(name = "care_end_time")
+    private LocalTime careEndTime;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
