@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -20,6 +22,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     @Override
     public SignupResponse signup(SignupRequest request) {
 
@@ -39,10 +42,11 @@ public class UserServiceImpl implements UserService {
                 .email(request.email())
                 .password(request.password())
                 .role(role)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         User savedUser = userRepository.save(user);
 
-        return new SignupResponse(savedUser.getId(), savedUser.getEmail(), savedUser.getRole());
+        return new SignupResponse(savedUser.getId(), savedUser.getEmail(), savedUser.getRole().name());
     }
 }

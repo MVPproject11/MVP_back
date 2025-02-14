@@ -5,6 +5,6 @@ import com.eleven.mvp_back.domain.enums.Role;
 public record SignupResponse(
         Long id,
         String email,
-        Role role
+        String role
 ) {
 }
