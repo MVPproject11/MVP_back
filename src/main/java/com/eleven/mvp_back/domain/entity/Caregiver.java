@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class Caregiver {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "caregiver_id")
     private Long id;
 

@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.repository;
+package com.eleven.mvp_back.domain.repository;
 
 import com.eleven.mvp_back.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

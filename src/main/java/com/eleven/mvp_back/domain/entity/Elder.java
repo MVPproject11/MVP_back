@@ -38,19 +38,18 @@ public class Elder {
     @Column(columnDefinition = "TEXT")
     private String elderPhoto;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String elderAddress;
 
     @Column(nullable = false)
     private Integer weight;
 
-    @Column(length = 255)
     private String disease;
 
-    @Column(nullable = false, length = 255) // 단일선택
+    // 단일선택
     private Housemate housemate;
 
-    @Column(name = "symptoms_dementia", nullable = false, length = 255) // 복수선택
+    @Column(name = "symptoms_dementia", nullable = false) // 복수선택
     private SymptomsDementia symptomsDementia;
 
     @Column(nullable = false)

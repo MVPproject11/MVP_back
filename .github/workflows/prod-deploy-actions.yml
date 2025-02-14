@@ -89,6 +89,7 @@ jobs:
             cat <<'EOF' > /home/ubuntu/MVP_back/.env
             MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }}
             MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} 
+            JWT_SECRET=${{ secrets.JTW_SECRET }}
             EOF
 
       # EC2에 배포 (Docker Compose 사용)
