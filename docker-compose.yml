@@ -6,6 +6,7 @@ services:
       SPRING_PROFILES_ACTIVE: prod
       MYSQL_USERNAME: ${MYSQL_USERNAME}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_SECRET: ${JTW_SECRET}
     ports:
       - 8080:8080
     restart: always
