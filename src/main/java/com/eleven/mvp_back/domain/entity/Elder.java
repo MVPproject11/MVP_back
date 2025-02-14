@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Table(name = "elders")
@@ -19,6 +19,7 @@ public class Elder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     @Column(name = "id")
     private Long id;
 
@@ -54,25 +55,4 @@ public class Elder {
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
-
-    @Column
-    private LocalDateTime updatedAt;
-
-    public static Elder of(String name, LocalDate birth, Gender gender, String careGrade,
-                           String elderPhoto, String elderAddress, Integer weight, String disease,
-                           Housemate housemate, SymptomsDementia symptomsDementia) {
-        return Elder.builder()
-                .name(name)
-                .birth(birth)
-                .gender(gender)
-                .careGrade(careGrade)
-                .elderPhoto(elderPhoto)
-                .elderAddress(elderAddress)
-                .weight(weight)
-                .disease(disease)
-                .housemate(housemate)
-                .symptomsDementia(symptomsDementia)
-                .createdAt(LocalDateTime.now())
-                .build();
-    }
 }
