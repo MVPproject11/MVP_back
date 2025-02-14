@@ -1,6 +1,7 @@
 package com.eleven.mvp_back.domain.entity;
 
-import com.eleven.mvp_back.enums.MatchingStatus;
+import com.eleven.mvp_back.domain.enums.MatchingStatus;
+import com.eleven.mvp_back.domain.enums.ProgressStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +30,11 @@ public class Matching {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private MatchingStatus status;
+    private MatchingStatus matchingStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true, length = 20)
+    private ProgressStatus progressStatus;
 
     @Column(nullable = false)
     private LocalDateTime requestDate;

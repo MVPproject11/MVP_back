@@ -1,6 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
-import com.eleven.mvp_back.enums.Role;
+import com.eleven.mvp_back.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

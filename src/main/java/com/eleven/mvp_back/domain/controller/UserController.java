@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.controller;
+package com.eleven.mvp_back.domain.controller;
 
 import com.eleven.mvp_back.domain.service.UserService;
 import lombok.RequiredArgsConstructor;

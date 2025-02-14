@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.enums;
+package com.eleven.mvp_back.domain.enums;
 
 public enum WorkType {
     VISIT_CARE("방문요양"),

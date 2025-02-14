@@ -1,6 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
-import com.eleven.mvp_back.enums.Weekday;
+import com.eleven.mvp_back.domain.enums.Weekday;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,6 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
-import com.eleven.mvp_back.enums.Gender;
+import com.eleven.mvp_back.domain.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 

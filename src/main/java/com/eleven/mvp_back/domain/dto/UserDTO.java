@@ -1,6 +1,6 @@
-package com.eleven.mvp_back.dto;
+package com.eleven.mvp_back.domain.dto;
 
-import com.eleven.mvp_back.enums.Role;
+import com.eleven.mvp_back.domain.enums.Role;
 import lombok.Data;
 
 @Data

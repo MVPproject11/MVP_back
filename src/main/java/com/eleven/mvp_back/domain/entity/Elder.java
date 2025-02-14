@@ -1,9 +1,9 @@
 package com.eleven.mvp_back.domain.entity;
 
-import com.eleven.mvp_back.enums.CareGrade;
-import com.eleven.mvp_back.enums.Gender;
-import com.eleven.mvp_back.enums.Housemate;
-import com.eleven.mvp_back.enums.SymptomsDementia;
+import com.eleven.mvp_back.domain.enums.CareGrade;
+import com.eleven.mvp_back.domain.enums.Gender;
+import com.eleven.mvp_back.domain.enums.Housemate;
+import com.eleven.mvp_back.domain.enums.SymptomsDementia;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.enums;
+package com.eleven.mvp_back.domain.enums;
 
 public enum SymptomsDementia {
     NORMAL("정상 (치매 증상 없음)"),

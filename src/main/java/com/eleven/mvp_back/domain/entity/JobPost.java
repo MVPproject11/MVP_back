@@ -1,7 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
-import com.eleven.mvp_back.enums.Benefit;
-import com.eleven.mvp_back.enums.WorkType;
+import com.eleven.mvp_back.domain.enums.WorkType;
 import jakarta.persistence.*;
 import lombok.*;
 
