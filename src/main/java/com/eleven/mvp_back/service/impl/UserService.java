@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.service;
+package com.eleven.mvp_back.service.impl;
 
 import com.eleven.mvp_back.domain.entity.User;
 import com.eleven.mvp_back.domain.repository.UserRepository;

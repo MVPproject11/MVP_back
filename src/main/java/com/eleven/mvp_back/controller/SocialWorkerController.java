@@ -5,8 +5,8 @@ import com.eleven.mvp_back.domain.entity.SocialWorker;
 import com.eleven.mvp_back.domain.entity.User;
 import com.eleven.mvp_back.dto.SocialWorkerDTO;
 import com.eleven.mvp_back.exception.ResourceNotFoundException;
-import com.eleven.mvp_back.service.SocialWorkerService;
-import com.eleven.mvp_back.service.UserService;
+import com.eleven.mvp_back.service.impl.SocialWorkerService;
+import com.eleven.mvp_back.service.impl.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ public class SocialWorkerController {
                     socialWorkerDTO.getIntroduction(),
                     socialWorkerDTO.getSocialworkerProfile()
             );
-            socialWorker.setUser(user);
+            //socialWorker.setUser(user);
             SocialWorker savedSocialWorker = socialWorkerService.saveSocialWorker(socialWorker);
 
             if (savedSocialWorker == null) {

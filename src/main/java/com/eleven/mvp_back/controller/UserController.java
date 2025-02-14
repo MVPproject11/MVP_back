@@ -3,7 +3,7 @@ package com.eleven.mvp_back.controller;
 import com.eleven.mvp_back.common.ApiResponse;
 import com.eleven.mvp_back.domain.entity.User;
 import com.eleven.mvp_back.dto.UserDTO;
-import com.eleven.mvp_back.service.UserService;
+import com.eleven.mvp_back.service.impl.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
