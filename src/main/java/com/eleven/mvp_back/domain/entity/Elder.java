@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.enums.CareGrade;
 import com.eleven.mvp_back.enums.Gender;
 import com.eleven.mvp_back.enums.Housemate;
 import com.eleven.mvp_back.enums.SymptomsDementia;
@@ -33,8 +34,9 @@ public class Elder {
     @Column(nullable = false, length = 1)
     private Gender gender;
 
+    @Enumerated(EnumType.STRING)
     @Column(length = 10)
-    private String careGrade;
+    private CareGrade careGrade;
 
     @Column(columnDefinition = "TEXT")
     private String elderPhoto;
