@@ -50,9 +50,12 @@ public class Elder {
     // 단일선택
     private Housemate housemate;
 
-    @Column(name = "symptoms_dementia", nullable = false) // 복수선택
+    @Column(nullable = false) // 복수선택
     private SymptomsDementia symptomsDementia;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime updatedAt;
 }

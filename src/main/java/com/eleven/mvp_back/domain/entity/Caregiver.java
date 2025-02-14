@@ -8,15 +8,21 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Table(name = "caregivers")
 public class Caregiver {
 
     @Id
+    @Setter(AccessLevel.NONE)
     @Column(name = "caregiver_id")
     private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "caregiver_id")
+    private User user;
 
     @Column(nullable = false, length = 10)
     private String name;
@@ -42,35 +48,12 @@ public class Caregiver {
 
     private Integer careerPeriod;
 
-    @Column(length = 255)
     private String mainCareer;
 
-    @Column(length = 255)
     private String introduction;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "caregiver_id")
-    private User user;
-
-    public static Caregiver of(String name, Gender gender, String phoneNumber, boolean ownCar, boolean dementiaTraining,
-                               Integer desiredWage, Integer careerPeriod, String mainCareer, String introduction) {
-        return Caregiver.builder()
-                .name(name)
-                .gender(gender)
-                .phoneNumber(phoneNumber)
-                .ownCar(ownCar)
-                .dementiaTraining(dementiaTraining)
-                .desiredWage(desiredWage)
-                .careerPeriod(careerPeriod)
-                .mainCareer(mainCareer)
-                .introduction(introduction)
-                .createdAt(LocalDateTime.now())
-                .build();
-    }
 }
