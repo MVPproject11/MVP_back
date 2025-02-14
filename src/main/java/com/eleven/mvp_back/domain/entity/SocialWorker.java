@@ -26,7 +26,7 @@ public class SocialWorker {
     @Column(nullable = false, length = 50)
     private String centerName;
 
-    @Column(nullable = false, length = 13)
+    @Column(nullable = false, length = 11)
     private String phoneNumber;
 
     @Column(nullable = false)

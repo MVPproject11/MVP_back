@@ -9,13 +9,13 @@ public enum WorkType {
     HOSPITAL_ESCORT("병원동행"),
     DAY_NIGHT_PROTECTION("주야간보호");
 
-    private final String description;
+    private final String displayName;
 
-    WorkType(String description) {
-        this.description = description;
+    WorkType(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDisplayName() {
+        return displayName;
     }
 }

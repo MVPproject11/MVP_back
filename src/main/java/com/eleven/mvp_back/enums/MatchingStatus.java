@@ -1,12 +1,14 @@
 package com.eleven.mvp_back.enums;
 
-public enum Gender {
-    M("남자"),
-    F("여자");
+public enum MatchingStatus {
+    REQUESTED("요청상태"),
+    NEGOTIATING("협상 중"),
+    COMPLETED("완료"),
+    FAILED("실패");
 
     private final String displayName;
 
-    Gender(String displayName) {
+    MatchingStatus(String displayName) {
         this.displayName = displayName;
     }
 

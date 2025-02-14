@@ -1,12 +1,15 @@
 package com.eleven.mvp_back.enums;
 
-public enum Gender {
-    M("남자"),
-    F("여자");
+public enum WageType {
+    HOURLY("시급"),
+    DAILY("일급"),
+    MONTHLY("월급"),
+    YEARLY("연봉"),
+    PER_TASK("건당");
 
     private final String displayName;
 
-    Gender(String displayName) {
+    WageType(String displayName) {
         this.displayName = displayName;
     }
 

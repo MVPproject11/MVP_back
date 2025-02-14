@@ -32,7 +32,7 @@ public class Caregiver {
     @Column(nullable = false, length = 1)
     private Gender gender;
 
-    @Column(nullable = false, length = 13)
+    @Column(nullable = false, length = 11)
     private String phoneNumber;
 
     @Column(columnDefinition = "TEXT")
