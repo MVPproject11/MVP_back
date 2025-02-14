@@ -23,13 +23,4 @@ public class SocialworkerElder {
     @ManyToOne
     @JoinColumn(name = "elder_id", nullable = false)
     private Elder elder;
-
-    public static SocialworkerElder of(SocialWorker socialWorker, Elder elder, Long id2Value) {
-        SocialworkerElderId id = new SocialworkerElderId(socialWorker.getId(), id2Value);
-        return SocialworkerElder.builder()
-                .id(id)
-                .socialWorker(socialWorker)
-                .elder(elder)
-                .build();
-    }
 }

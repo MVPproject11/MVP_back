@@ -19,7 +19,7 @@ public class SocialWorkerController {
     private final SocialWorkerService socialWorkerService;
     private final UserService userService;
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<ApiResponse<SocialWorker>> createSocialWorker(@RequestBody SocialWorkerDTO socialWorkerDTO, @RequestParam String email) {
         User user = userService.findUserByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + socialWorkerDTO.getId()));
@@ -54,5 +54,5 @@ public class SocialWorkerController {
         SocialWorker socialWorker = socialWorkerService.findSocialWorkerById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Social worker not found with id: " + id));
         return ResponseEntity.ok(ApiResponse.success(socialWorker));
-    }
+    }*/
 }

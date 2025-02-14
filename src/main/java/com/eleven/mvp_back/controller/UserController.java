@@ -15,7 +15,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<ApiResponse<User>> createUser(@RequestBody UserDTO userDTO) {
         try {
             User user = User.of(
@@ -44,5 +44,5 @@ public class UserController {
             return ResponseEntity.ok(ApiResponse.error(500, "이미 사용중인 이메일 입니다."));
         }
         return ResponseEntity.ok(ApiResponse.success("사용가능한 이메일 입니다.", false));
-    }
+    }*/
 }
