@@ -1,6 +1,5 @@
 package com.eleven.mvp_back.domain.controller;
 
-import com.eleven.mvp_back.domain.service.SocialWorkerService;
 import com.eleven.mvp_back.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/socialworkers")
 public class SocialWorkerController {
 
-    private final SocialWorkerService socialWorkerService;
-    private final UserService userService;
+    /*private final SocialWorkerService socialWorkerService;
+    private final UserService userService;*/
 
     /*@PostMapping
     public ResponseEntity<ApiResponse<SocialWorker>> createSocialWorker(@RequestBody SocialWorkerDTO socialWorkerDTO, @RequestParam String email) {
