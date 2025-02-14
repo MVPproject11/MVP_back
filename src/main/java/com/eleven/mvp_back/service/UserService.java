@@ -1,7 +1,7 @@
 package com.eleven.mvp_back.service;
 
 import com.eleven.mvp_back.domain.entity.User;
-import com.eleven.mvp_back.repository.UserRepository;
+import com.eleven.mvp_back.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

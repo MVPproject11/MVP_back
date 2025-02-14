@@ -1,7 +1,7 @@
 package com.eleven.mvp_back.service;
 
 import com.eleven.mvp_back.domain.entity.SocialWorker;
-import com.eleven.mvp_back.repository.SocialWorkerRepository;
+import com.eleven.mvp_back.domain.repository.SocialWorkerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
