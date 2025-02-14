@@ -23,18 +23,17 @@ public class JwtTokenProvider {
 
     @PostConstruct
     public void init() {
-        log.info("JWT_SECRET: {}", secret);
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String createToken(String userId, String email, String role) {
+    public String createToken(Long userId, String email, String role) {
         long now = (new Date()).getTime();
 
         final long EXPIRATION_TIME = 3600000;
         Date validity = new Date(now + EXPIRATION_TIME);
 
         return Jwts.builder()
-                .subject(userId)
+                .subject(String.valueOf(userId))
                 .claim("role", role)
                 .issuedAt(new Date(now))
                 .expiration(validity)
