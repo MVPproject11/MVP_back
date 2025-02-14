@@ -1,11 +1,7 @@
-package com.eleven.mvp_back.controller;
+package com.eleven.mvp_back.domain.controller;
 
-import com.eleven.mvp_back.common.ApiResponse;
-import com.eleven.mvp_back.domain.entity.User;
-import com.eleven.mvp_back.dto.UserDTO;
-import com.eleven.mvp_back.service.impl.UserService;
+import com.eleven.mvp_back.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +11,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<ApiResponse<User>> createUser(@RequestBody UserDTO userDTO) {
         try {
             User user = User.of(
@@ -44,5 +40,5 @@ public class UserController {
             return ResponseEntity.ok(ApiResponse.error(500, "이미 사용중인 이메일 입니다."));
         }
         return ResponseEntity.ok(ApiResponse.success("사용가능한 이메일 입니다.", false));
-    }
+    }*/
 }

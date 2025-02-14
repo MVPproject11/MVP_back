@@ -1,14 +1,8 @@
-package com.eleven.mvp_back.controller;
+package com.eleven.mvp_back.domain.controller;
 
-import com.eleven.mvp_back.common.ApiResponse;
-import com.eleven.mvp_back.domain.entity.SocialWorker;
-import com.eleven.mvp_back.domain.entity.User;
-import com.eleven.mvp_back.dto.SocialWorkerDTO;
-import com.eleven.mvp_back.exception.ResourceNotFoundException;
-import com.eleven.mvp_back.service.impl.SocialWorkerService;
-import com.eleven.mvp_back.service.impl.UserService;
+import com.eleven.mvp_back.domain.service.SocialWorkerService;
+import com.eleven.mvp_back.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +13,7 @@ public class SocialWorkerController {
     private final SocialWorkerService socialWorkerService;
     private final UserService userService;
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<ApiResponse<SocialWorker>> createSocialWorker(@RequestBody SocialWorkerDTO socialWorkerDTO, @RequestParam String email) {
         User user = userService.findUserByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + socialWorkerDTO.getId()));
@@ -54,5 +48,5 @@ public class SocialWorkerController {
         SocialWorker socialWorker = socialWorkerService.findSocialWorkerById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Social worker not found with id: " + id));
         return ResponseEntity.ok(ApiResponse.success(socialWorker));
-    }
+    }*/
 }

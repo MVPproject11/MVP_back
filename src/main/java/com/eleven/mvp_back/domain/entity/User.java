@@ -1,6 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
-import com.eleven.mvp_back.enums.Role;
+import com.eleven.mvp_back.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Table(name = "users")
@@ -35,13 +35,4 @@ public class User {
 
     @Column
     private LocalDateTime updatedAt;
-
-    public static User of(String email, String password, Role role) {
-        return User.builder()
-                .email(email)
-                .password(password)
-                .role(role)
-                .createdAt(LocalDateTime.now())
-                .build();
-    }
 }

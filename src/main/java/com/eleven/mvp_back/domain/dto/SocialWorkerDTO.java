@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.dto;
+package com.eleven.mvp_back.domain.dto;
 
 import lombok.Data;
 
