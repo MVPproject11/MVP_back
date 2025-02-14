@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.enums.Weekday;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,21 +9,19 @@ import lombok.*;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-@Table(name = "caregiver_availabletimes")
-public class CaregiverAvailableTime {
+@Table(name = "caregiver_availabledays")
+public class CaregiverAvailableDay {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "caregiver_availabletime_id")
+    @Column(name = "caregiver_availableday_id")
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "caregiver_id", nullable = false)
     private Caregiver caregiver;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "available_day", nullable = false, length = 3)
-    private String availableDay;
-
-    @Column(name = "avaliable_time", nullable = false, length = 10)
-    private String availableTime;
+    private Weekday availableDay;
 }
