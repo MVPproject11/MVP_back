@@ -7,15 +7,21 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Table(name = "socialworkers")
 public class SocialWorker {
 
     @Id
+    @Setter(AccessLevel.NONE)
     @Column(name = "socialworker_id")
     private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "socialworker_id")
+    private User user;
 
     @Column(nullable = false, length = 50)
     private String centerName;
@@ -43,25 +49,4 @@ public class SocialWorker {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "socialworker_id")
-    private User user;
-
-    public static SocialWorker of(String centerName, String phoneNumber, boolean ownBathCar,
-                                  String centerAddress, String centerGrade, Integer operationPeriod,
-                                  String introduction, String socialworkerProfile) {
-        return SocialWorker.builder()
-                .centerName(centerName)
-                .phoneNumber(phoneNumber)
-                .ownBathCar(ownBathCar)
-                .centerAddress(centerAddress)
-                .centerGrade(centerGrade)
-                .operationPeriod(operationPeriod)
-                .introduction(introduction)
-                .socialworkerProfile(socialworkerProfile)
-                .createdAt(LocalDateTime.now())
-                .build();
-    }
 }
