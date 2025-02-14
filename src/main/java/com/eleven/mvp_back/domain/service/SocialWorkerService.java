@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.service.impl;
+package com.eleven.mvp_back.domain.service;
 
 import com.eleven.mvp_back.domain.entity.Caregiver;
 import com.eleven.mvp_back.domain.entity.SocialWorker;
