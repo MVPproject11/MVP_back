@@ -11,6 +11,8 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -68,6 +70,22 @@ public class Elder {
 
     @Column
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ElderCareDays> careDays = new ArrayList<>();
+
+    @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ElderDailyLivingAssist> dailyLivingAssists = new ArrayList<>();
+
+    @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ElderExcretionAssist> excretionAssists = new ArrayList<>();
+
+    @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ElderMealAssist> mealAssists = new ArrayList<>();
+
+    @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ElderMoveAssist> moveAssists = new ArrayList<>();
+
 
     public void updateFromRequest(ElderRequest elderRequest) {
         this.name = elderRequest.getName();

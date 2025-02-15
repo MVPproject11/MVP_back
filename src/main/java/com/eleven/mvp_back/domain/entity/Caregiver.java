@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -61,4 +63,16 @@ public class Caregiver {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
+    private List<CaregiverAvailableDay> availableDays = new ArrayList<>();
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
+    private List<CaregiverLocation> locations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
+    private List<Certification> certifications = new ArrayList<>();
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
+    private List<Matching> matchings = new ArrayList<>();
 }
