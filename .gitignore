@@ -38,10 +38,6 @@ out/
 
 ### dotenv environment variable files ###
 .env
-.env.properties
-
-### mysql data file ###
-mysql_data/
 
 ### mysql data file ###
 mysql_data/
