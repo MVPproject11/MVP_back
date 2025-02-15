@@ -11,6 +11,7 @@ import com.eleven.mvp_back.domain.service.UserService;
 import com.eleven.mvp_back.exception.BadRequestException;
 import com.eleven.mvp_back.exception.ResourceAlreadyExistException;
 import com.eleven.mvp_back.exception.ResourceNotFoundException;
+import com.eleven.mvp_back.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +33,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public SignupResponse signup(SignupRequest request) {
 
-        // 이메일(가입 id) 중복체크
         if (userRepository.existsByEmail(request.email())) {
             throw new ResourceAlreadyExistException("이미 등록된 이메일입니다.");
         }
@@ -41,12 +41,12 @@ public class UserServiceImpl implements UserService {
         try {
             role = Role.valueOf(request.role().toUpperCase());
         } catch (IllegalArgumentException ex) {
-            throw new IllegalArgumentException(request.role());
+            throw new BadRequestException("올바르지 않은 역할입니다.");
         }
 
         User user = User.builder()
                 .email(request.email())
-                .password(request.password())
+                .password(passwordEncoder.encode(request.password()))
                 .role(role)
                 .createdAt(LocalDateTime.now())
                 .build();
