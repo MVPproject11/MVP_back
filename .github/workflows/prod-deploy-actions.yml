@@ -57,7 +57,7 @@ jobs:
       # Docker 이미지 빌드 및 푸시 (대상 플랫폼: linux/arm64/v8)
       - name: Build and push Docker image
         run: |
-          docker buildx build --platform linux/arm64/v8 \
+          docker buildx build --platform linux/amd64 \
           -f Dockerfile \
           -t ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest \
           --push .
@@ -106,6 +106,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
             cd /home/ubuntu/MVP_back
             docker compose pull
             docker compose up -d

@@ -2,6 +2,7 @@ services:
   eleven-server:
     image: 831926627674.dkr.ecr.ap-northeast-2.amazonaws.com/eleven-server
     container_name: mvp_back-eleven-server-1
+    platform: linux/amd64
     environment:
       SPRING_PROFILES_ACTIVE: prod
       MYSQL_USERNAME: ${MYSQL_USERNAME}
