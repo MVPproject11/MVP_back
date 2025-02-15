@@ -45,9 +45,12 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/", "/index.html", "/static/**",
                                 "/api/auth/**",
                                 "/api/elder/**",
                                 "/swagger-ui/**",
+                                "/swagger-resources/**",
+                                "/webjars/**",
                                 "/v3/api-docs/**",
                                 "/h2-console/**"
                                 // TODO: 구현하면서 비회원에게 공개하지 않을 부분 고려해야됨 우선은 회원인 경우에만 접근가능
@@ -62,7 +65,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://43.201.138.71:8080"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
