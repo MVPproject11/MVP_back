@@ -13,8 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Table(name = "jobposts")
-
-
 public class JobPost {
 
     @Id
@@ -73,5 +71,4 @@ public class JobPost {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 }
