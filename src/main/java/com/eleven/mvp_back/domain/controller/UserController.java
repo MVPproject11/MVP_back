@@ -1,44 +1,44 @@
 package com.eleven.mvp_back.domain.controller;
 
+import com.eleven.mvp_back.common.ApiResponse;
+import com.eleven.mvp_back.domain.dto.request.LoginRequest;
+import com.eleven.mvp_back.domain.dto.request.SignupRequest;
+import com.eleven.mvp_back.domain.dto.response.LoginResponse;
+import com.eleven.mvp_back.domain.dto.response.SignupResponse;
 import com.eleven.mvp_back.domain.service.UserService;
+import com.eleven.mvp_back.security.JwtTokenProvider;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping("/api/auth")
 public class UserController {
 
     private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    /*@PostMapping
-    public ResponseEntity<ApiResponse<User>> createUser(@RequestBody UserDTO userDTO) {
-        try {
-            User user = User.of(
-                    userDTO.getEmail(),
-                    userDTO.getPassword(),
-                    userDTO.getRole()
-            );
+    @PostMapping("/signup")
+    public ResponseEntity<ApiResponse<SignupResponse>> signUpUser(@Valid @RequestBody SignupRequest request) {
+        SignupResponse response = userService.signup(request);
 
-            User savedUser = userService.saveUser(user);
-
-            if (savedUser == null) {
-                throw new RuntimeException("올바른 정보를 입력해주십시오.");
-            }
-
-            return ResponseEntity.ok(ApiResponse.success("회원가입에 성공하였습니다.", savedUser));
-        } catch (Exception e) {
-            // 저장 실패 시 에러 응답 반환
-            return ResponseEntity.status(500).body(ApiResponse.error(500, "회원가입에 실패하였습니다: " + e.getMessage()));
-        }
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.created("회원가입에 성공하셨습니다.", response));
     }
 
-    @GetMapping("/check-email")
-    public ResponseEntity<ApiResponse<Boolean>> checkEmailDuplicate(@RequestParam String email) {
-        boolean isDuplicate = userService.findUserByEmail(email).isPresent();
-        if (isDuplicate) {
-            return ResponseEntity.ok(ApiResponse.error(500, "이미 사용중인 이메일 입니다."));
-        }
-        return ResponseEntity.ok(ApiResponse.success("사용가능한 이메일 입니다.", false));
-    }*/
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = userService.login(request);
+        String token = jwtTokenProvider.createToken(response.userId(), response.email(), response.role());
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Authorization", "Bearer " + token)
+                .body(ApiResponse.success("로그인 성공", response));
+    }
 }

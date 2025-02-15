@@ -26,6 +26,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+        String requestURI = request.getRequestURI();
+
+        // 회원가입 및 로그인 요청은 필터를 거치지 않고 다음 필터로 넘김
+        if (requestURI.startsWith("/api/auth/signup") || requestURI.startsWith("/api/auth/login")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         // 헤더에서 토큰 추출
         String bearerToken = request.getHeader("Authorization");
         String token = null;
@@ -47,9 +55,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            //필터 체인 계속 진행
-            filterChain.doFilter(request, response);
         }
+        //필터 체인 계속 진행
+        filterChain.doFilter(request, response);
     }
 }
