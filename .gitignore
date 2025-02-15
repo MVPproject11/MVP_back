@@ -38,3 +38,6 @@ out/
 
 ### dotenv environment variable files ###
 .env
+
+### mysql data file ###
+mysql_data/
