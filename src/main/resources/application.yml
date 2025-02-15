@@ -10,7 +10,7 @@ spring:
       region:
         static: ap-northeast-2
       s3:
-        bucket: eleven-server
+        bucket: eleven-static-files
 
 jwt:
   secret: ${JWT_SECRET}

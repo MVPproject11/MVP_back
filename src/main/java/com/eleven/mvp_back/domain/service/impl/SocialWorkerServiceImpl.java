@@ -42,7 +42,7 @@ public class SocialWorkerServiceImpl implements SocialWorkerService {
         }
 
         String profileUrl;
-        if (request.socialworkerProfile() != null && request.socialworkerProfile().isEmpty()) {
+        if (request.socialworkerProfile() != null && !request.socialworkerProfile().isEmpty()) {
             profileUrl = fileUploadService.uploadFile(request.socialworkerProfile());
         } else {
             profileUrl = null;
