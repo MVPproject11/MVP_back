@@ -41,10 +41,16 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation group: 'software.amazon.awssdk', name: 's3', version: '2.30.20'
+    testImplementation 'software.amazon.awssdk:s3:2.30.20'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+test {
+    environment "AWS_S3_ACCESS_KEY_ID", System.getenv("AWS_S3_ACCESS_KEY_ID")
+    environment "AWS_S3_SECRET_ACCESS_KEY", System.getenv("AWS_S3_SECRET_ACCESS_KEY")
+    environment "JWT_SECRET", System.getenv("JWT_SECRET")
 }

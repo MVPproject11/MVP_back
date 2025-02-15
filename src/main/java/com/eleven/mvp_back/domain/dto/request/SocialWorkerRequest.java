@@ -3,6 +3,7 @@ package com.eleven.mvp_back.domain.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 public record SocialWorkerRequest(
         @NotBlank(message = "센터 이름은 필수입니다.")
@@ -24,6 +25,6 @@ public record SocialWorkerRequest(
 
         String introduction,
 
-        String socialworkerProfile
+        MultipartFile socialworkerProfile
 ) {
 }
