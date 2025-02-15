@@ -30,6 +30,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    implementation group: 'io.awspring.cloud', name: 'spring-cloud-aws-starter', version: '3.3.0'
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.12.781'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.6'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.6'
@@ -39,10 +45,16 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'software.amazon.awssdk:s3:2.30.20'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+test {
+    environment "AWS_S3_ACCESS_KEY_ID", System.getenv("AWS_S3_ACCESS_KEY_ID")
+    environment "AWS_S3_SECRET_ACCESS_KEY", System.getenv("AWS_S3_SECRET_ACCESS_KEY")
+    environment "JWT_SECRET", System.getenv("JWT_SECRET")
 }

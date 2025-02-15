@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.request.ElderRequest;
 import com.eleven.mvp_back.domain.enums.CareGrade;
 import com.eleven.mvp_back.domain.enums.Gender;
 import com.eleven.mvp_back.domain.enums.Housemate;
@@ -67,4 +68,19 @@ public class Elder {
 
     @Column
     private LocalDateTime updatedAt;
+
+    public void updateFromRequest(ElderRequest elderRequest) {
+        this.name = elderRequest.getName();
+        this.birth = elderRequest.getBirth();
+        this.gender = elderRequest.getGender();
+        this.careGrade = elderRequest.getCareGrade();
+        this.elderPhoto = elderRequest.getElderPhoto();
+        this.elderAddress = elderRequest.getElderAddress();
+        this.weight = elderRequest.getWeight();
+        this.disease = elderRequest.getDisease();
+        this.housemate = elderRequest.getHousemate();
+        this.symptomsDementia = elderRequest.getSymptomsDementia();
+        this.careStartTime = elderRequest.getCareStartTime();
+        this.careEndTime = elderRequest.getCareEndTime();
+    }
 }

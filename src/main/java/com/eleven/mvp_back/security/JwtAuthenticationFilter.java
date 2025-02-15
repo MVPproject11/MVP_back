@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
 
         // 회원가입 및 로그인 요청은 필터를 거치지 않고 다음 필터로 넘김
-        if (requestURI.startsWith("/api/auth/signup") || requestURI.startsWith("/api/auth/login")) {
+        if (requestURI.startsWith("/api/auth")) {
             filterChain.doFilter(request, response);
             return;
         }
