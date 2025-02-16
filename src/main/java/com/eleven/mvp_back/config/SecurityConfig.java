@@ -43,24 +43,23 @@ public class SecurityConfig {
                 //.cors(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // 모든 요청을 허용 (테스트)
-                )
                 /*.authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll() // 모든 요청을 허용 (테스트)
+                )*/
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/", "/index.html", "/static/**",
-                                "/api/auth/**",
-                                "/api/elder/**",
-                                "/swagger-ui/**",
-                                "/swagger-resources/**",
-                                "/webjars/**",
-                                "/v3/api-docs/**",
+                                "/swagger-ui/**", "/swagger-resources/**",
+                                "/webjars/**", "/v3/api-docs/**",
                                 "/h2-console/**"
-                                // TODO: 구현하면서 비회원에게 공개하지 않을 부분 고려해야됨 우선은 회원인 경우에만 접근가능
                         ).permitAll()
 
-                        //.requestMatchers("/api/**").authenticated()
-                )*/
+                        // /api/auth/**`는 완전히 인증 없이 허용
+                        .requestMatchers("/api/auth/**").permitAll()
+
+                        // 나머지 모든 API는 인증 필요
+                        .requestMatchers("/api/**").authenticated()
+                )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
         return http.build();
@@ -69,7 +68,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://43.201.138.71:8080"));
+        configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);

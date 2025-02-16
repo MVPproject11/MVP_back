@@ -4,6 +4,7 @@ import com.eleven.mvp_back.common.ApiResponse;
 import com.eleven.mvp_back.domain.dto.request.caregiver.CaregiverRequest;
 import com.eleven.mvp_back.domain.dto.response.caregiver.CaregiverResponse;
 import com.eleven.mvp_back.domain.service.CaregiverService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
+@Tag(name = "요양보호사 API", description = "요양보호사 관련 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/caregivers")
