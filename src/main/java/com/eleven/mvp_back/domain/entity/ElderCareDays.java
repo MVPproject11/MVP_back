@@ -24,4 +24,10 @@ public class ElderCareDays {
     @Enumerated(EnumType.STRING)
     @Column(name = "day_of_week", length = 3)
     private Weekday dayOfWeek;
+
+    // 새로운 생성자 추가
+    public ElderCareDays(Elder elder, Weekday dayOfWeek) {
+        this.elder = elder;
+        this.dayOfWeek = dayOfWeek;
+    }
 }
