@@ -81,4 +81,20 @@ public class CaregiverServiceImpl implements CaregiverService {
                 caregiver.getCertifications()
         );
     }
+
+    @Transactional
+    @Override
+    public CaregiverResponse updateCaregiverInfo(CaregiverRequest request, Long userId) throws IOException {
+
+        Caregiver caregiver = caregiverRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("등록된 요양보호사 정보를 찾을 수 없습니다."));
+
+        if (request.caregiverProfile() != null && !request.caregiverProfile().isEmpty()) {
+            if (caregiver.getCaregiverProfile() != null) {
+
+            }
+        }
+
+        return null;
+    }
 }

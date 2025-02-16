@@ -39,7 +39,18 @@ public class FileUploadServiceImpl implements FileUploadService {
         return getPublicUrl(fileName);
     }
 
+    @Override
+    public void deleteFile(String fileUrl) {
+        String fileName = extractFileName(fileUrl);
+        amazonS3.deleteObject(bucket, fileName);
+    }
+
     private String getPublicUrl(String fileName) {
         return String.format("https://%s.s3.%s.amazonaws.com/%s", bucket, amazonS3.getRegionName(), fileName);
+    }
+
+    private String extractFileName(String fileUrl) {
+        // Url 파일명만 추출
+        return fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
     }
 }
