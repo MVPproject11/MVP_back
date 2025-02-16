@@ -69,4 +69,16 @@ public class CaregiverServiceImpl implements CaregiverService {
 
         return caregiver.toResponse(availableDays, locations, certifications);
     }
+
+    @Override
+    public CaregiverResponse getCaregiverInfo(Long userId) {
+
+        Caregiver caregiver = caregiverRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("등록된 요양보호사 정보를 찾을 수 없습니다."));
+
+        return caregiver.toResponse(caregiver.getAvailableDays(),
+                caregiver.getLocations(),
+                caregiver.getCertifications()
+        );
+    }
 }
