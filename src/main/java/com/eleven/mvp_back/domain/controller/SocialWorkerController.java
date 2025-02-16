@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,4 +28,25 @@ public class SocialWorkerController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.created("사회복지사 정보 등록 성공", response));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<SocialWorkerResponse>> updateSocialWorker(
+            @PathVariable Long id,
+            @Valid @RequestBody SocialWorkerRequest request) throws IOException {
+        SocialWorkerResponse response = socialWorkerService.updateSocialWorker(id, request);
+        return ResponseEntity.ok(ApiResponse.success("사회복지사 정보 수정 성공", response));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<SocialWorkerResponse>> getSocialWorkerById(@PathVariable Long id) {
+        SocialWorkerResponse response = socialWorkerService.getSocialWorkerById(id);
+        return ResponseEntity.ok(ApiResponse.success("사회복지사 정보 조회 성공", response));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<ApiResponse<List<SocialWorkerResponse>>> getAllSocialWorkers() {
+        List<SocialWorkerResponse> responseList = socialWorkerService.getAllSocialWorkers();
+        return ResponseEntity.ok(ApiResponse.success("전체 사회복지사 목록 조회 성공", responseList));
+    }
+
 }

@@ -10,7 +10,6 @@ import com.eleven.mvp_back.domain.repository.UserRepository;
 import com.eleven.mvp_back.domain.service.FileUploadService;
 import com.eleven.mvp_back.domain.service.SocialWorkerService;
 import com.eleven.mvp_back.exception.BadRequestException;
-import com.eleven.mvp_back.exception.ResourceAlreadyExistException;
 import com.eleven.mvp_back.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +51,7 @@ public class SocialWorkerServiceImpl implements SocialWorkerService {
 
         //TODO: aws s3로 이미지 url 저장하도록 추가예정
 
+
         SocialWorker socialWorker = SocialWorker.builder()
                 .user(user)
                 .centerName(request.centerName())
@@ -76,5 +78,79 @@ public class SocialWorkerServiceImpl implements SocialWorkerService {
                 saveSocialWorker.getIntroduction(),
                 saveSocialWorker.getSocialworkerProfile()
         );
+    }
+
+    @Override
+    public SocialWorkerResponse updateSocialWorker(Long id, SocialWorkerRequest request) throws IOException {
+        //사회복지사 정보 수정 로직 추가
+        SocialWorker socialWorker = socialWorkerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("해당 사회복지사를 찾을 수 없습니다."));
+
+        socialWorker.setCenterName(request.centerName());
+        socialWorker.setPhoneNumber(request.phoneNumber());
+        socialWorker.setOwnBathCar(request.ownBathCar());
+        socialWorker.setCenterAddress(request.centerAddress());
+        socialWorker.setCenterGrade(request.centerGrade());
+        socialWorker.setOperationPeriod(request.operationPeriod());
+        socialWorker.setIntroduction(request.introduction());
+
+        // 프로필 이미지가 변경되었을 경우 업로드 처리
+        if (request.socialworkerProfile() != null && !request.socialworkerProfile().isEmpty()) {
+            String profileUrl = fileUploadService.uploadFile(request.socialworkerProfile());
+            socialWorker.setSocialworkerProfile(profileUrl);
+        }
+
+        socialWorker.setUpdatedAt(LocalDateTime.now());
+        socialWorkerRepository.save(socialWorker);
+
+        return new SocialWorkerResponse(
+                socialWorker.getId(),
+                socialWorker.getCenterName(),
+                socialWorker.getPhoneNumber(),
+                socialWorker.isOwnBathCar(),
+                socialWorker.getCenterAddress(),
+                socialWorker.getCenterGrade(),
+                socialWorker.getOperationPeriod(),
+                socialWorker.getIntroduction(),
+                socialWorker.getSocialworkerProfile()
+        );
+    }
+
+    @Override
+    public SocialWorkerResponse getSocialWorkerById(Long id) {
+        // 사회복지사 정보를 ID로 조회
+        SocialWorker socialWorker = socialWorkerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("해당 사회복지사를 찾을 수 없습니다"));
+
+        return new SocialWorkerResponse(
+                socialWorker.getId(),
+                socialWorker.getCenterName(),
+                socialWorker.getPhoneNumber(),
+                socialWorker.isOwnBathCar(),
+                socialWorker.getCenterAddress(),
+                socialWorker.getCenterGrade(),
+                socialWorker.getOperationPeriod(),
+                socialWorker.getIntroduction(),
+                socialWorker.getSocialworkerProfile()
+        );
+    }
+
+    @Override
+    public List<SocialWorkerResponse> getAllSocialWorkers() {
+        // 모든 사회복지사 데이터를 조회하여 SocialWorkerResponse로 변환
+        List<SocialWorker> socialWorkers = socialWorkerRepository.findAll();
+
+        return socialWorkers.stream()
+                .map(socialWorker -> new SocialWorkerResponse(
+                        socialWorker.getId(),
+                        socialWorker.getCenterName(),
+                        socialWorker.getPhoneNumber(),
+                        socialWorker.isOwnBathCar(),
+                        socialWorker.getCenterAddress(),
+                        socialWorker.getCenterGrade(),
+                        socialWorker.getOperationPeriod(),
+                        socialWorker.getIntroduction(),
+                        socialWorker.getSocialworkerProfile()))
+                .collect(Collectors.toList());
     }
 }
