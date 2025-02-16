@@ -52,6 +52,76 @@ public class CaregiverServiceImpl implements CaregiverService {
 
         Caregiver caregiver = caregiverRepository.save(request.toEntity(user, profileUrl));
 
+        saveCaregiverDetails(request, caregiver);
+
+        return caregiver.toResponse(
+                caregiver.getAvailableDays(),
+                caregiver.getLocations(),
+                caregiver.getCertifications()
+        );
+    }
+
+    @Override
+    public CaregiverResponse getCaregiverInfo(Long userId) {
+
+        Caregiver caregiver = caregiverRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("등록된 요양보호사 정보를 찾을 수 없습니다."));
+
+        return caregiver.toResponse(caregiver.getAvailableDays(),
+                caregiver.getLocations(),
+                caregiver.getCertifications()
+        );
+    }
+
+    @Transactional
+    @Override
+    public CaregiverResponse updateCaregiverInfo(CaregiverRequest request, Long userId) throws IOException {
+
+        Caregiver caregiver = caregiverRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("등록된 요양보호사 정보를 찾을 수 없습니다."));
+
+        if (request.caregiverProfile() != null && !request.caregiverProfile().isEmpty()) {
+            if (caregiver.getCaregiverProfile() != null) {
+                fileUploadService.deleteFile(caregiver.getCaregiverProfile());
+            }
+            String newProfileUrl = fileUploadService.uploadFile(request.caregiverProfile());
+            caregiver.updateProfile(newProfileUrl);
+        } else {
+            if (caregiver.getCaregiverProfile() != null) {
+                fileUploadService.deleteFile(caregiver.getCaregiverProfile());
+                caregiver.updateProfile(null);
+            }
+        }
+
+        caregiver.updateCaregiverInfo(request);
+
+        caregiverAvailableDayRepository.deleteByCaregiver(caregiver);
+        caregiverLocationRepository.deleteByCaregiver(caregiver);
+        certificationRepository.deleteByCaregiver(caregiver);
+
+        saveCaregiverDetails(request, caregiver);
+
+        return caregiver.toResponse(
+                caregiver.getAvailableDays(),
+                caregiver.getLocations(),
+                caregiver.getCertifications()
+        );
+    }
+
+    @Transactional
+    @Override
+    public void deleteCaregiverInfo(Long userId) {
+        Caregiver caregiver = caregiverRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("등록된 요양보호사 정보를 찾을 . 없습니다."));
+
+        if (caregiver.getCaregiverProfile() != null) {
+            fileUploadService.deleteFile(caregiver.getCaregiverProfile());
+        }
+
+        caregiverRepository.delete(caregiver);
+    }
+
+    private void saveCaregiverDetails(CaregiverRequest request, Caregiver caregiver) {
         List<CaregiverAvailableDay> availableDays = request.availableDays().stream()
                 .map(day -> day.toEntity(caregiver)).toList();
 
@@ -66,7 +136,5 @@ public class CaregiverServiceImpl implements CaregiverService {
                 .map(cert -> cert.toEntity(caregiver)).toList();
 
         certificationRepository.saveAll(certifications);
-
-        return caregiver.toResponse(availableDays, locations, certifications);
     }
 }
