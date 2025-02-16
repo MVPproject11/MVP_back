@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.response.caregiver.CaregiverAvailableDayResponse;
 import com.eleven.mvp_back.domain.enums.Weekday;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,4 +25,8 @@ public class CaregiverAvailableDay {
     @Enumerated(EnumType.STRING)
     @Column(name = "available_day", nullable = false, length = 3)
     private Weekday availableDay;
+
+    public CaregiverAvailableDayResponse toResponse() {
+        return new CaregiverAvailableDayResponse(this.getAvailableDay());
+    }
 }

@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.response.caregiver.CaregiverResponse;
 import com.eleven.mvp_back.domain.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -75,4 +76,27 @@ public class Caregiver {
 
     @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
     private List<Matching> matchings = new ArrayList<>();
+
+    public CaregiverResponse toResponse(List<CaregiverAvailableDay> availableDays,
+                                        List<CaregiverLocation> locations,
+                                        List<Certification> certifications) {
+        return new CaregiverResponse(
+                this.getId(),
+                this.getName(),
+                this.getGender(),
+                this.getPhoneNumber(),
+                this.getCaregiverProfile(),
+                this.isOwnCar(),
+                this.isDementiaTraining(),
+                this.getDesiredWage(),
+                this.getCareerPeriod(),
+                this.getMainCareer(),
+                this.getIntroduction(),
+                this.getAvailableStartTime(),
+                this.getAvailableEndTime(),
+                availableDays.stream().map(CaregiverAvailableDay::toResponse).toList(),
+                locations.stream().map(CaregiverLocation::toResponse).toList(),
+                certifications.stream().map(Certification::toResponse).toList()
+        );
+    }
 }

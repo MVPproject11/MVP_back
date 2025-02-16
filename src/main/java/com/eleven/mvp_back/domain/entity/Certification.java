@@ -1,13 +1,12 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.response.caregiver.CertificationResponse;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Table(name = "certifications")
@@ -31,4 +30,8 @@ public class Certification {
 
     @Column(name = "certification_number", nullable = false, length = 20)
     private String certificationNumber;
+
+    public CertificationResponse toResponse() {
+        return new CertificationResponse(this.getCertificationType(), this.getCertificationGrade(), this.getCertificationNumber());
+    }
 }

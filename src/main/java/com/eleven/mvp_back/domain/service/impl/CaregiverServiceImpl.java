@@ -1,0 +1,72 @@
+package com.eleven.mvp_back.domain.service.impl;
+
+import com.eleven.mvp_back.domain.dto.request.caregiver.CaregiverRequest;
+import com.eleven.mvp_back.domain.dto.response.caregiver.CaregiverResponse;
+import com.eleven.mvp_back.domain.entity.*;
+import com.eleven.mvp_back.domain.enums.Role;
+import com.eleven.mvp_back.domain.repository.UserRepository;
+import com.eleven.mvp_back.domain.repository.caregiver.CaregiverAvailableDayRepository;
+import com.eleven.mvp_back.domain.repository.caregiver.CaregiverLocationRepository;
+import com.eleven.mvp_back.domain.repository.caregiver.CaregiverRepository;
+import com.eleven.mvp_back.domain.repository.caregiver.CertificationRepository;
+import com.eleven.mvp_back.domain.service.CaregiverService;
+import com.eleven.mvp_back.domain.service.FileUploadService;
+import com.eleven.mvp_back.exception.BadRequestException;
+import com.eleven.mvp_back.exception.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class CaregiverServiceImpl implements CaregiverService {
+
+    private final CaregiverRepository caregiverRepository;
+    private final CaregiverAvailableDayRepository caregiverAvailableDayRepository;
+    private final CaregiverLocationRepository caregiverLocationRepository;
+    private final CertificationRepository certificationRepository;
+    private final UserRepository userRepository;
+    private final FileUploadService fileUploadService;
+
+    @Transactional
+    @Override
+    public CaregiverResponse registerCaregiver(CaregiverRequest request, Long userId) throws IOException {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("해당 사용자를 찾을 없습니다."));
+
+        if (!user.getRole().equals(Role.CAREGIVER)) {
+            throw new BadRequestException("요양보호사 프로필은 요양보호사만 등록 가능합니다.");
+        }
+
+        if (caregiverRepository.existsByUser(user)) {
+            throw new BadRequestException("이미 등록된 요양보호사입니다.");
+        }
+
+        String profileUrl = (request.caregiverProfile() != null && !request.caregiverProfile().isEmpty())
+                ? fileUploadService.uploadFile(request.caregiverProfile()) : null;
+
+        Caregiver caregiver = caregiverRepository.save(request.toEntity(user, profileUrl));
+
+        List<CaregiverAvailableDay> availableDays = request.availableDays().stream()
+                .map(day -> day.toEntity(caregiver)).toList();
+
+        caregiverAvailableDayRepository.saveAll(availableDays);
+
+        List<CaregiverLocation> locations = request.locations().stream()
+                .map(loc -> loc.toEntity(caregiver)).toList();
+
+        caregiverLocationRepository.saveAll(locations);
+
+        List<Certification> certifications = request.certifications().stream()
+                .map(cert -> cert.toEntity(caregiver)).toList();
+
+        certificationRepository.saveAll(certifications);
+
+        return caregiver.toResponse(availableDays, locations, certifications);
+    }
+}
