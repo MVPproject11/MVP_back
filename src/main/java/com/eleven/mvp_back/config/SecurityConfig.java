@@ -44,6 +44,9 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll() // 모든 요청을 허용 (테스트)
+                )
+                /*.authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/", "/index.html", "/static/**",
                                 "/api/auth/**",
@@ -55,8 +58,9 @@ public class SecurityConfig {
                                 "/h2-console/**"
                                 // TODO: 구현하면서 비회원에게 공개하지 않을 부분 고려해야됨 우선은 회원인 경우에만 접근가능
                         ).permitAll()
-                        .anyRequest().authenticated()
-                )
+
+                        //.requestMatchers("/api/**").authenticated()
+                )*/
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
         return http.build();
