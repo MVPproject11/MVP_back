@@ -1,5 +1,7 @@
 package com.eleven.mvp_back.domain.dto.request.caregiver;
 
+import com.eleven.mvp_back.domain.entity.Caregiver;
+import com.eleven.mvp_back.domain.entity.Certification;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -16,4 +18,12 @@ public record CertificationRequest(
         @Size(max = 20, message = "자격증 번호는 최대 20자까지 입력 가능합니다.")
         String certificationNumber
 ) {
+        public Certification toEntity(Caregiver caregiver) {
+                return Certification.builder()
+                        .caregiver(caregiver)
+                        .certificationType(certificationType)
+                        .certificationGrade(certificationGrade)
+                        .certificationNumber(certificationNumber)
+                        .build();
+        }
 }

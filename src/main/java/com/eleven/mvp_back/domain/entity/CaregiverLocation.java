@@ -1,13 +1,12 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.response.caregiver.CaregiverLocationResponse;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Table(name = "caregiver_locations")
@@ -30,4 +29,8 @@ public class CaregiverLocation {
 
     @Column(nullable = false, length = 10)
     private String dong;
+
+    public CaregiverLocationResponse toResponse() {
+        return new CaregiverLocationResponse(this.getCity(), this.getDistrict(), this.getDong());
+    }
 }

@@ -1,9 +1,12 @@
 package com.eleven.mvp_back.domain.dto.request.caregiver;
 
+import com.eleven.mvp_back.domain.entity.Caregiver;
+import com.eleven.mvp_back.domain.entity.User;
 import com.eleven.mvp_back.domain.enums.Gender;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -51,4 +54,22 @@ public record CaregiverRequest(
 
         List<CertificationRequest> certifications
 ) {
+        public Caregiver toEntity(User user, String profileUrl) {
+                return Caregiver.builder()
+                        .user(user)
+                        .name(name())
+                        .gender(gender())
+                        .phoneNumber(phoneNumber())
+                        .caregiverProfile(profileUrl)
+                        .ownCar(ownCar())
+                        .dementiaTraining(dementiaTraining())
+                        .desiredWage(desiredWage())
+                        .careerPeriod(careerPeriod())
+                        .mainCareer(mainCareer())
+                        .introduction(introduction())
+                        .availableStartTime(availableStartTime())
+                        .availableEndTime(availableEndTime())
+                        .createdAt(LocalDateTime.now())
+                        .build();
+        }
 }

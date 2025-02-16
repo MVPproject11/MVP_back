@@ -1,5 +1,7 @@
 package com.eleven.mvp_back.domain.dto.request.caregiver;
 
+import com.eleven.mvp_back.domain.entity.Caregiver;
+import com.eleven.mvp_back.domain.entity.CaregiverLocation;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -16,4 +18,12 @@ public record CaregiverLocationRequest(
         @Size(max = 10, message = "동은 최대 10자까지 입력 가능합니다.")
         String dong
 ) {
+        public CaregiverLocation toEntity(Caregiver caregiver) {
+                return CaregiverLocation.builder()
+                        .caregiver(caregiver)
+                        .city(city)
+                        .district(district)
+                        .dong(dong)
+                        .build();
+        }
 }
