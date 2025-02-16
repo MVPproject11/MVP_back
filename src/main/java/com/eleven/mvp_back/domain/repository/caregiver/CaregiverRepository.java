@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface CaregiverRepository extends JpaRepository<Caregiver, Long> {
+public interface CaregiverRepository extends JpaRepository<Caregiver, Long>, CaregiverCustomRepository {
     boolean existsByUser(User user);
     Optional<Caregiver> findByUserId(Long userId);
 }
