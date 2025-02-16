@@ -5,14 +5,13 @@ import com.eleven.mvp_back.domain.dto.response.caregiver.CaregiverResponse;
 import com.eleven.mvp_back.domain.entity.*;
 import com.eleven.mvp_back.domain.enums.Role;
 import com.eleven.mvp_back.domain.repository.UserRepository;
-import com.eleven.mvp_back.domain.repository.caregiver.CaregiverAvailableDayRepository;
-import com.eleven.mvp_back.domain.repository.caregiver.CaregiverLocationRepository;
-import com.eleven.mvp_back.domain.repository.caregiver.CaregiverRepository;
-import com.eleven.mvp_back.domain.repository.caregiver.CertificationRepository;
+import com.eleven.mvp_back.domain.repository.caregiver.*;
 import com.eleven.mvp_back.domain.service.CaregiverService;
 import com.eleven.mvp_back.domain.service.FileUploadService;
 import com.eleven.mvp_back.exception.BadRequestException;
 import com.eleven.mvp_back.exception.ResourceNotFoundException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +30,9 @@ public class CaregiverServiceImpl implements CaregiverService {
     private final CertificationRepository certificationRepository;
     private final UserRepository userRepository;
     private final FileUploadService fileUploadService;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Transactional
     @Override
@@ -80,6 +82,10 @@ public class CaregiverServiceImpl implements CaregiverService {
         Caregiver caregiver = caregiverRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("등록된 요양보호사 정보를 찾을 수 없습니다."));
 
+        caregiverRepository.deleteCaregiverDetails(caregiver.getId());
+
+        entityManager.flush();
+
         if (request.caregiverProfile() != null && !request.caregiverProfile().isEmpty()) {
             if (caregiver.getCaregiverProfile() != null) {
                 fileUploadService.deleteFile(caregiver.getCaregiverProfile());
@@ -94,10 +100,6 @@ public class CaregiverServiceImpl implements CaregiverService {
         }
 
         caregiver.updateCaregiverInfo(request);
-
-        caregiverAvailableDayRepository.deleteByCaregiver(caregiver);
-        caregiverLocationRepository.deleteByCaregiver(caregiver);
-        certificationRepository.deleteByCaregiver(caregiver);
 
         saveCaregiverDetails(request, caregiver);
 
