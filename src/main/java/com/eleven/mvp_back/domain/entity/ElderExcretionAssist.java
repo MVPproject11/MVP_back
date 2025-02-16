@@ -22,4 +22,10 @@ public class ElderExcretionAssist {
 
     @Column(nullable = false, length = 50)
     private String excretionServiceName;
+
+    // 새로운 생성자 추가
+    public ElderExcretionAssist(Elder elder, String excretionServiceName) {
+        this.elder = elder;
+        this.excretionServiceName = excretionServiceName;
+    }
 }

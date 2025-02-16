@@ -86,6 +86,8 @@ public class Elder {
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderMoveAssist> moveAssists = new ArrayList<>();
 
+    @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SocialworkerElder> socialworkerElder = new ArrayList<>();
 
     public void updateFromRequest(ElderRequest elderRequest) {
         this.name = elderRequest.getName();
@@ -100,5 +102,32 @@ public class Elder {
         this.symptomsDementia = elderRequest.getSymptomsDementia();
         this.careStartTime = elderRequest.getCareStartTime();
         this.careEndTime = elderRequest.getCareEndTime();
+        this.updatedAt = LocalDateTime.now();
+
+        // 연관 데이터 업데이트
+        this.careDays.clear();
+        elderRequest.getCareDays().forEach(day ->
+                this.careDays.add(new ElderCareDays(this, day))
+        );
+
+        this.mealAssists.clear();
+        elderRequest.getMealAssists().forEach(assist ->
+                this.mealAssists.add(new ElderMealAssist(this, assist))
+        );
+
+        this.excretionAssists.clear();
+        elderRequest.getExcretionAssists().forEach(assist ->
+                this.excretionAssists.add(new ElderExcretionAssist(this, assist))
+        );
+
+        this.moveAssists.clear();
+        elderRequest.getMoveAssists().forEach(assist ->
+                this.moveAssists.add(new ElderMoveAssist(this, assist))
+        );
+
+        this.dailyLivingAssists.clear();
+        elderRequest.getDailyLivingAssists().forEach(assist ->
+                this.dailyLivingAssists.add(new ElderDailyLivingAssist(this, assist))
+        );
     }
 }

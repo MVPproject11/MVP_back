@@ -1,13 +1,16 @@
 package com.eleven.mvp_back.domain.dto.response;
 
-import com.eleven.mvp_back.domain.entity.Elder;
+import com.eleven.mvp_back.domain.entity.*;
 import com.eleven.mvp_back.domain.enums.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -31,77 +34,12 @@ public class ElderResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-//    private List<CareDayResponse> careDays;
-//    private List<MealAssistResponse> mealAssists;
-//    private List<ExcretionAssistResponse> excretionAssists;
-//    private List<MoveAssistResponse> moveAssists;
-//    private List<DailyLivingAssistResponse> dailyLivingAssists;
-//    private SocialworkerElderResponse socialWorkersElder;
-//
-//    @Getter
-//    @Setter
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    @Builder
-//    public static class CareDayResponse {
-//        private Long careDaysId;
-//        private Long elderId;
-//        private List<Weekday> dayOfWeek;
-//    }
-//
-//    @Getter
-//    @Setter
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    @Builder
-//    public static class MealAssistResponse {
-//        private Long mealAssistsId;
-//        private Long elderId;
-//        private List<String> mealServiceName;
-//    }
-//
-//    @Getter
-//    @Setter
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    @Builder
-//    public static class ExcretionAssistResponse {
-//        private Long excretionAssistsId;
-//        private Long elderId;
-//        private List<String> excretionServiceName;
-//    }
-//
-//    @Getter
-//    @Setter
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    @Builder
-//    public static class MoveAssistResponse {
-//        private Long moveAssistsId;
-//        private Long elderId;
-//        private List<String> moveServiceName;
-//    }
-//
-//    @Getter
-//    @Setter
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    @Builder
-//    public static class DailyLivingAssistResponse {
-//        private Long dailyLivingAssistsId;
-//        private Long elderId;
-//        private List<String> dailyLivingServiceName;
-//    }
-//
-//    @Getter
-//    @Setter
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    @Builder
-//    public static class SocialworkerElderResponse {
-//        private Long socialWorkerId;
-//        private Long elderId;
-//    }
+    private List<String> careDays;
+    private List<String> mealAssists;
+    private List<String> excretionAssists;
+    private List<String> moveAssists;
+    private List<String> dailyLivingAssists;
+    private List<Long> socialWorkerId;
 
     public static ElderResponse fromEntity(Elder elder) {
         return ElderResponse.builder()
@@ -120,36 +58,36 @@ public class ElderResponse {
                 .careEndTime(elder.getCareEndTime())
                 .createdAt(elder.getCreatedAt())
                 .updatedAt(elder.getUpdatedAt())
-//                .careDays(elder.getCareDays().stream().map(careDay -> CareDayResponse.builder()
-//                        .careDaysId(careDay.getId())
-//                        .elderId(careDay.getElder().getId())
-//                        .dayOfWeek(List.of(careDay.getDayOfWeek())) // 수정: 배열로 반환
-//                        .build()).collect(Collectors.toList()))
-//                .mealAssists(elder.getMealAssists().stream().map(mealAssist -> MealAssistResponse.builder()
-//                        .mealAssistsId(mealAssist.getId())
-//                        .elderId(mealAssist.getElder().getId())
-//                        .mealServiceName(List.of(mealAssist.getMealServiceName())) // 수정: 배열로 반환
-//                        .build()).collect(Collectors.toList()))
-//                .excretionAssists(elder.getExcretionAssists().stream().map(excretionAssist -> ExcretionAssistResponse.builder()
-//                        .excretionAssistsId(excretionAssist.getId())
-//                        .elderId(excretionAssist.getElder().getId())
-//                        .excretionServiceName(List.of(excretionAssist.getExcretionServiceName())) // 수정: 배열로 반환
-//                        .build()).collect(Collectors.toList()))
-//                .moveAssists(elder.getMoveAssists().stream().map(moveAssist -> MoveAssistResponse.builder()
-//                        .moveAssistsId(moveAssist.getId())
-//                        .elderId(moveAssist.getElder().getId())
-//                        .moveServiceName(List.of(moveAssist.getMoveServiceName())) // 수정: 배열로 반환
-//                        .build()).collect(Collectors.toList()))
-//                .dailyLivingAssists(elder.getDailyLivingAssists().stream().map(dailyLivingAssist -> DailyLivingAssistResponse.builder()
-//                        .dailyLivingAssistsId(dailyLivingAssist.getId())
-//                        .elderId(dailyLivingAssist.getElder().getId())
-//                        .dailyLivingServiceName(List.of(dailyLivingAssist.getDailyLivingServiceName())) // 수정: 배열로 반환
-//                        .build()).collect(Collectors.toList()))
-//                .socialWorkersElder(SocialworkerElderResponse.builder()
-//                        .socialWorkerId(elder.getSocialworkerElder().getSocialWorker().getId())
-//                        .elderId(elder.getSocialworkerElder().getElder().getId())
-//                        .build())
+                .careDays(elder.getCareDays() != null ?
+                        elder.getCareDays().stream()
+                                .map(careDay -> careDay.getDayOfWeek().name())
+                                .collect(Collectors.toList())
+                        : new ArrayList<>())
+                .mealAssists(elder.getMealAssists() != null ?
+                        elder.getMealAssists().stream()
+                                .map(ElderMealAssist::getMealServiceName)
+                                .collect(Collectors.toList())
+                        : new ArrayList<>())
+                .excretionAssists(elder.getExcretionAssists() != null ?
+                        elder.getExcretionAssists().stream()
+                                .map(ElderExcretionAssist::getExcretionServiceName)
+                                .collect(Collectors.toList())
+                        : new ArrayList<>())
+                .moveAssists(elder.getMoveAssists() != null ?
+                        elder.getMoveAssists().stream()
+                                .map(ElderMoveAssist::getMoveServiceName)
+                                .collect(Collectors.toList())
+                        : new ArrayList<>())
+                .dailyLivingAssists(elder.getDailyLivingAssists() != null ?
+                        elder.getDailyLivingAssists().stream()
+                                .map(ElderDailyLivingAssist::getDailyLivingServiceName)
+                                .collect(Collectors.toList())
+                        : new ArrayList<>())
+                .socialWorkerId(Collections.singletonList(elder.getSocialworkerElder() != null &&
+                        !elder.getSocialworkerElder().isEmpty() ?
+                        elder.getSocialworkerElder().get(0).getSocialWorker().getId()
+                        : null))
                 .build();
     }
-
 }
+

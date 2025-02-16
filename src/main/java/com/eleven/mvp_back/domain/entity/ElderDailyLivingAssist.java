@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.enums.Weekday;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,4 +23,10 @@ public class ElderDailyLivingAssist {
 
     @Column(length = 50)
     private String dailyLivingServiceName;
+
+    // 새로운 생성자 추가
+    public ElderDailyLivingAssist(Elder elder, String dailyLivingServiceName) {
+        this.elder = elder;
+        this.dailyLivingServiceName = dailyLivingServiceName;
+    }
 }

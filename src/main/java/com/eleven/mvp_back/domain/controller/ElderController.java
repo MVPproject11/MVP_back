@@ -4,6 +4,9 @@ import com.eleven.mvp_back.common.ApiResponse;
 import com.eleven.mvp_back.domain.dto.request.ElderRequest;
 import com.eleven.mvp_back.domain.dto.response.ElderResponse;
 import com.eleven.mvp_back.domain.service.ElderService;
+import com.eleven.mvp_back.exception.BadRequestException;
+import com.eleven.mvp_back.exception.ResourceNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,34 +20,46 @@ public class ElderController {
 
     // 1. 어르신 정보 등록
     @PostMapping("/register/{socialWorkerId}")
-    public ApiResponse<ElderResponse> registerElder(
-            @PathVariable Long socialWorkerId,
-            @RequestBody ElderRequest elderRequest) {
-        ElderResponse response = elderService.registerElder(socialWorkerId, elderRequest);
-        return ApiResponse.success("어르신 정보 등록에 성공하였습니다.", response);
+    public ApiResponse<ElderResponse> registerElder(@PathVariable Long socialWorkerId, @Valid @RequestBody ElderRequest elderRequest) {
+        try {
+            ElderResponse response = elderService.registerElder(socialWorkerId, elderRequest);
+            return ApiResponse.success("어르신 등록 성공", response);
+        } catch (ResourceNotFoundException e) {
+            return ApiResponse.error(500, e.getMessage());
+        }
     }
 
     // 2. 사회복지사가 담당하는 어르신 정보 조회
     @GetMapping("/social/{socialWorkerId}")
     public ApiResponse<List<ElderResponse>> getEldersBySocialWorker(@PathVariable Long socialWorkerId) {
-        List<ElderResponse> responses = elderService.getEldersBySocialWorker(socialWorkerId);
-        return ApiResponse.success(responses);
+        try {
+            List<ElderResponse> responses = elderService.getEldersBySocialWorker(socialWorkerId);
+            return ApiResponse.success(responses);
+        } catch (ResourceNotFoundException e) {
+            return ApiResponse.error(500, e.getMessage());
+        }
     }
 
     // 3. 특정 어르신 정보 조회
     @GetMapping("/{elderId}")
     public ApiResponse<ElderResponse> getElderById(@PathVariable Long elderId) {
-        ElderResponse response = elderService.getElderById(elderId);
-        return ApiResponse.success(response);
+        try {
+            ElderResponse response = elderService.getElderById(elderId);
+            return ApiResponse.success(response);
+        } catch (ResourceNotFoundException e) {
+            return ApiResponse.error(500, e.getMessage());
+        }
     }
 
     // 4. 특정 어르신 정보 수정
-    @PutMapping("/{elderId}")
-    public ApiResponse<ElderResponse> updateElder(
-            @PathVariable Long elderId,
-            @RequestBody ElderRequest elderRequest) {
-        ElderResponse response = elderService.updateElder(elderId, elderRequest);
-        return ApiResponse.success("어르신 정보 수정에 성공하였습니다.", response);
+    @PutMapping("/{elderId}/{socialWorkerId}")
+    public ApiResponse<ElderResponse> updateElderAndSocialWorker(@PathVariable Long elderId, @PathVariable Long socialWorkerId, @Valid @RequestBody ElderRequest elderRequest) {
+        try {
+            ElderResponse response = elderService.updateElder(elderId, socialWorkerId, elderRequest);
+            return ApiResponse.success("어르신 정보 수정에 성공하였습니다.", response);
+        } catch (ResourceNotFoundException | BadRequestException e) {
+            return ApiResponse.error(500, e.getMessage());
+        }
     }
 
     // 5. 특정 어르신 정보 삭제
