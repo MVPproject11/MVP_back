@@ -32,6 +32,7 @@ public class UserController {
                 .body(ApiResponse.created("회원가입에 성공하셨습니다.", response));
     }
 
+
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest request) {
         LoginResponse response = userService.login(request);
