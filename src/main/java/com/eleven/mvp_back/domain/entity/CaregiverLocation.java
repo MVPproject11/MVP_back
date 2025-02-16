@@ -22,7 +22,7 @@ public class CaregiverLocation {
     @JoinColumn(name = "caregiver_id", nullable = false)
     private Caregiver caregiver;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 10)
     private String city;
 
     @Column(nullable = false, length = 10)
