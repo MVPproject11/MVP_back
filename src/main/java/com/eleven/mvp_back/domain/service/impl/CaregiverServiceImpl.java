@@ -108,6 +108,19 @@ public class CaregiverServiceImpl implements CaregiverService {
         );
     }
 
+    @Transactional
+    @Override
+    public void deleteCaregiverInfo(Long userId) {
+        Caregiver caregiver = caregiverRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("등록된 요양보호사 정보를 찾을 . 없습니다."));
+
+        if (caregiver.getCaregiverProfile() != null) {
+            fileUploadService.deleteFile(caregiver.getCaregiverProfile());
+        }
+
+        caregiverRepository.delete(caregiver);
+    }
+
     private void saveCaregiverDetails(CaregiverRequest request, Caregiver caregiver) {
         List<CaregiverAvailableDay> availableDays = request.availableDays().stream()
                 .map(day -> day.toEntity(caregiver)).toList();

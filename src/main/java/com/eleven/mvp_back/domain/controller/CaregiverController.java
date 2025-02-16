@@ -49,4 +49,10 @@ public class CaregiverController {
 
         return ResponseEntity.ok(ApiResponse.success("요양보호사 정보 수정 성공", response));
     }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<ApiResponse<Void>> deleteCaregiveerProfile(@AuthenticationPrincipal Long userId) {
+        caregiverService.deleteCaregiverInfo(userId);
+        return ResponseEntity.ok(ApiResponse.success("요양보호사 프로필 삭제 성공", null));
+    }
 }
