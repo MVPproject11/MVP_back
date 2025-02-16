@@ -4,6 +4,7 @@ import com.eleven.mvp_back.common.ApiResponse;
 import com.eleven.mvp_back.domain.dto.request.LoginRequest;
 import com.eleven.mvp_back.domain.dto.request.SignupRequest;
 import com.eleven.mvp_back.domain.dto.response.LoginResponse;
+import com.eleven.mvp_back.domain.dto.response.LogoutResponse;
 import com.eleven.mvp_back.domain.dto.response.SignupResponse;
 import com.eleven.mvp_back.domain.service.UserService;
 import com.eleven.mvp_back.security.JwtTokenProvider;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,5 +41,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Authorization", "Bearer " + token)
                 .body(ApiResponse.success("로그인 성공", response));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<LogoutResponse> logout(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        return ResponseEntity.ok(userService.logout(token));
     }
 }
