@@ -2,7 +2,9 @@ package com.eleven.mvp_back.config;
 
 import com.eleven.mvp_back.security.JwtAuthenticationFilter;
 import com.eleven.mvp_back.security.JwtTokenProvider;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,47 +25,36 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
-
-    @Bean
-    public AuthenticationManager authenticationManager
-            (AuthenticationConfiguration authenticationConfiguration) throws Exception {
-
-        return authenticationConfiguration.getAuthenticationManager();
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                // nginx 설정 후 아래코드로 변경
-                //.cors(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                /*.authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // 모든 요청을 허용 (테스트)
-                )*/
                 .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll() // 모든 요청을 허용 (테스트)
+                )
+                // TODO: 구현 끝난 후 변경
+                /*.authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/", "/index.html", "/static/**",
+                                "/",
                                 "/swagger-ui/**", "/swagger-resources/**",
                                 "/webjars/**", "/v3/api-docs/**",
-                                "/h2-console/**"
-                        ).permitAll()
-
-                        // /api/auth/**`는 완전히 인증 없이 허용
-                        .requestMatchers("/api/auth/**").permitAll()
-
-                        // 나머지 모든 API는 인증 필요
+                                "/h2-console/**",
+                                "/api/auth/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
-                )
+                )*/
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
         return http.build();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
