@@ -40,4 +40,13 @@ public class CaregiverController {
         CaregiverResponse response = caregiverService.getCaregiverInfo(userId);
         return ResponseEntity.ok(ApiResponse.success("요양보호사 정보 조회 성공", response));
     }
+
+    @PutMapping("/me")
+    public ResponseEntity<ApiResponse<CaregiverResponse>> updateCaregiverInfo(
+            @Valid @ModelAttribute CaregiverRequest request, @AuthenticationPrincipal Long userId) throws IOException {
+
+        CaregiverResponse response = caregiverService.updateCaregiverInfo(request, userId);
+
+        return ResponseEntity.ok(ApiResponse.success("요양보호사 정보 수정 성공", response));
+    }
 }

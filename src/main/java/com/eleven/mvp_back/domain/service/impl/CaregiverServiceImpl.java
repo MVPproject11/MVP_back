@@ -52,22 +52,13 @@ public class CaregiverServiceImpl implements CaregiverService {
 
         Caregiver caregiver = caregiverRepository.save(request.toEntity(user, profileUrl));
 
-        List<CaregiverAvailableDay> availableDays = request.availableDays().stream()
-                .map(day -> day.toEntity(caregiver)).toList();
+        saveCaregiverDetails(request, caregiver);
 
-        caregiverAvailableDayRepository.saveAll(availableDays);
-
-        List<CaregiverLocation> locations = request.locations().stream()
-                .map(loc -> loc.toEntity(caregiver)).toList();
-
-        caregiverLocationRepository.saveAll(locations);
-
-        List<Certification> certifications = request.certifications().stream()
-                .map(cert -> cert.toEntity(caregiver)).toList();
-
-        certificationRepository.saveAll(certifications);
-
-        return caregiver.toResponse(availableDays, locations, certifications);
+        return caregiver.toResponse(
+                caregiver.getAvailableDays(),
+                caregiver.getLocations(),
+                caregiver.getCertifications()
+        );
     }
 
     @Override
@@ -91,10 +82,46 @@ public class CaregiverServiceImpl implements CaregiverService {
 
         if (request.caregiverProfile() != null && !request.caregiverProfile().isEmpty()) {
             if (caregiver.getCaregiverProfile() != null) {
-
+                fileUploadService.deleteFile(caregiver.getCaregiverProfile());
+            }
+            String newProfileUrl = fileUploadService.uploadFile(request.caregiverProfile());
+            caregiver.updateProfile(newProfileUrl);
+        } else {
+            if (caregiver.getCaregiverProfile() != null) {
+                fileUploadService.deleteFile(caregiver.getCaregiverProfile());
+                caregiver.updateProfile(null);
             }
         }
 
-        return null;
+        caregiver.updateCaregiverInfo(request);
+
+        caregiverAvailableDayRepository.deleteByCaregiver(caregiver);
+        caregiverLocationRepository.deleteByCaregiver(caregiver);
+        certificationRepository.deleteByCaregiver(caregiver);
+
+        saveCaregiverDetails(request, caregiver);
+
+        return caregiver.toResponse(
+                caregiver.getAvailableDays(),
+                caregiver.getLocations(),
+                caregiver.getCertifications()
+        );
+    }
+
+    private void saveCaregiverDetails(CaregiverRequest request, Caregiver caregiver) {
+        List<CaregiverAvailableDay> availableDays = request.availableDays().stream()
+                .map(day -> day.toEntity(caregiver)).toList();
+
+        caregiverAvailableDayRepository.saveAll(availableDays);
+
+        List<CaregiverLocation> locations = request.locations().stream()
+                .map(loc -> loc.toEntity(caregiver)).toList();
+
+        caregiverLocationRepository.saveAll(locations);
+
+        List<Certification> certifications = request.certifications().stream()
+                .map(cert -> cert.toEntity(caregiver)).toList();
+
+        certificationRepository.saveAll(certifications);
     }
 }
