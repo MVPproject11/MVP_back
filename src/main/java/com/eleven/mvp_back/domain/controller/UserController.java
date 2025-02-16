@@ -2,6 +2,7 @@ package com.eleven.mvp_back.domain.controller;
 
 import com.eleven.mvp_back.common.ApiResponse;
 import com.eleven.mvp_back.domain.dto.request.LoginRequest;
+import com.eleven.mvp_back.domain.dto.request.LogoutRequest;
 import com.eleven.mvp_back.domain.dto.request.SignupRequest;
 import com.eleven.mvp_back.domain.dto.response.LoginResponse;
 import com.eleven.mvp_back.domain.dto.response.LogoutResponse;
@@ -44,8 +45,9 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<LogoutResponse> logout(HttpServletRequest request) {
-        String token = jwtTokenProvider.resolveToken(request);
-        return ResponseEntity.ok(userService.logout(token));
+    public ResponseEntity<ApiResponse<LogoutResponse>> logout(@Valid @RequestBody LogoutRequest request) {
+        String token = request.accessToken();
+        LogoutResponse response = userService.logout(token);
+        return ResponseEntity.ok(ApiResponse.success(response.message(), response));
     }
 }
