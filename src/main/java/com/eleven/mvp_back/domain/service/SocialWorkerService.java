@@ -11,7 +11,7 @@ public interface SocialWorkerService {
 
     SocialWorkerResponse updateSocialWorker(Long id, SocialWorkerRequest request) throws IOException;
 
-    SocialWorkerResponse getSocialWorkerById(Long id);
+    SocialWorkerResponse getSocialWorkerInfo(Long userId);
 
-    List<SocialWorkerResponse> getAllSocialWorkers();
+    void deleteSocialWorkerInfo(Long userId);
 }

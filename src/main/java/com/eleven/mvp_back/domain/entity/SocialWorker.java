@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.request.SocialWorkerRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
@@ -50,4 +50,19 @@ public class SocialWorker {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    public void updateProfile(String profileUrl) {
+        this.socialworkerProfile = profileUrl;
+    }
+
+    public void updateInfo(SocialWorkerRequest request) {
+        this.centerName = request.centerName();
+        this.phoneNumber = request.phoneNumber();
+        this.ownBathCar = request.ownBathCar();
+        this.centerAddress = request.centerAddress();
+        this.centerGrade = request.centerGrade();
+        this.operationPeriod = request.operationPeriod();
+        this.introduction = request.introduction();
+        this.updatedAt = LocalDateTime.now();
+    }
 }
