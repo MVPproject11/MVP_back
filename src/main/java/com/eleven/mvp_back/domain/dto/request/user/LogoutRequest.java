@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.domain.dto.request;
+package com.eleven.mvp_back.domain.dto.request.user;
 
 import jakarta.validation.constraints.NotBlank;
 

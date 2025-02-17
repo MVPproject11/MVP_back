@@ -66,15 +66,19 @@ public class Caregiver {
 
     private LocalDateTime updatedAt;
 
+    @Builder.Default
     @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
     private List<CaregiverAvailableDay> availableDays = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
     private List<CaregiverLocation> locations = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
     private List<Certification> certifications = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
     private List<Matching> matchings = new ArrayList<>();
 

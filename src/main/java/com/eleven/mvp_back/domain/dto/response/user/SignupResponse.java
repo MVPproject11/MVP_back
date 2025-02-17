@@ -1,6 +1,4 @@
-package com.eleven.mvp_back.domain.dto.response;
-
-import com.eleven.mvp_back.domain.enums.Role;
+package com.eleven.mvp_back.domain.dto.response.user;
 
 public record SignupResponse(
         Long id,

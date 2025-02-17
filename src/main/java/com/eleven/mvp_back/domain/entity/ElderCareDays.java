@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.response.elder.ElderCareDaysResponse;
 import com.eleven.mvp_back.domain.enums.Weekday;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,9 +26,7 @@ public class ElderCareDays {
     @Column(name = "day_of_week", length = 3)
     private Weekday dayOfWeek;
 
-    // 새로운 생성자 추가
-    public ElderCareDays(Elder elder, Weekday dayOfWeek) {
-        this.elder = elder;
-        this.dayOfWeek = dayOfWeek;
+    public ElderCareDaysResponse toResponse() {
+        return new ElderCareDaysResponse(this.getDayOfWeek());
     }
 }
