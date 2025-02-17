@@ -1,8 +1,8 @@
 package com.eleven.mvp_back.domain.controller;
 
 import com.eleven.mvp_back.common.CommonResponse;
-import com.eleven.mvp_back.domain.dto.request.ElderRequest;
-import com.eleven.mvp_back.domain.dto.response.ElderResponse;
+import com.eleven.mvp_back.domain.dto.request.elder.ElderRequest;
+import com.eleven.mvp_back.domain.dto.response.elder.*;
 import com.eleven.mvp_back.domain.service.ElderService;
 import com.eleven.mvp_back.exception.BadRequestException;
 import com.eleven.mvp_back.exception.ResourceNotFoundException;
@@ -12,8 +12,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "어르신 API", description = "어르신 관련 API")
@@ -30,14 +33,16 @@ public class ElderController {
             @ApiResponse(responseCode = "400", description = "잘못된 요청 (필수 값 누락 등)"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
-    @PostMapping("/register/{socialWorkerId}")
+    @PostMapping(value = "/register/{socialWorkerId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResponse<ElderResponse> registerElder(@PathVariable Long socialWorkerId,
-                                                       @Valid @RequestBody ElderRequest elderRequest) {
+                                                       @Valid @ModelAttribute ElderRequest elderRequest) {
         try {
             ElderResponse response = elderService.registerElder(socialWorkerId, elderRequest);
             return CommonResponse.success("어르신 등록 성공", response);
         } catch (ResourceNotFoundException e) {
             return CommonResponse.error(500, e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -83,15 +88,18 @@ public class ElderController {
             @ApiResponse(responseCode = "404", description = "어르신 정보 없음"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
-    @PutMapping("/{elderId}/{socialWorkerId}")
+    @PutMapping(value = "/{elderId}/{socialWorkerId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CommonResponse<ElderResponse> updateElderAndSocialWorker(@PathVariable Long elderId,
                                                                     @PathVariable Long socialWorkerId,
-                                                                    @Valid @RequestBody ElderRequest elderRequest) {
+                                                                    @RequestPart("elderPhoto") MultipartFile elderPhoto,
+                                                                    @Valid @RequestPart("elderRequest") ElderRequest elderRequest) {
         try {
-            ElderResponse response = elderService.updateElder(elderId, socialWorkerId, elderRequest);
+            ElderResponse response = elderService.updateElder(elderId, socialWorkerId, elderRequest, elderPhoto);
             return CommonResponse.success("어르신 정보 수정에 성공하였습니다.", response);
         } catch (ResourceNotFoundException | BadRequestException e) {
             return CommonResponse.error(500, e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

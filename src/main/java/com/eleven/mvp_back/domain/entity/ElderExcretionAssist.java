@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.response.elder.ElderExcretionAssistsResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,9 +24,7 @@ public class ElderExcretionAssist {
     @Column(nullable = false, length = 50)
     private String excretionServiceName;
 
-    // 새로운 생성자 추가
-    public ElderExcretionAssist(Elder elder, String excretionServiceName) {
-        this.elder = elder;
-        this.excretionServiceName = excretionServiceName;
+    public ElderExcretionAssistsResponse toResponse() {
+        return new ElderExcretionAssistsResponse(this.getExcretionServiceName());
     }
 }
