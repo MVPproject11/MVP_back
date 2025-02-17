@@ -80,6 +80,7 @@ public class SocialWorkerController {
 
     @Operation(summary = "내 요양보호사 프로필 삭제", description = "현재 로그인한 사용자의 요양보호사 프로필을 삭제합니다.")
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "요양보호사 프로필 삭제 성공"),
             @ApiResponse(responseCode = "200", description = "요양보호사 프로필 삭제 성공"),
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
             @ApiResponse(responseCode = "403", description = "권한 없음"),

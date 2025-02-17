@@ -10,7 +10,5 @@ import com.eleven.mvp_back.domain.dto.response.SignupResponse;
 public interface UserService {
     SignupResponse signup(SignupRequest request);
     LoginResponse login(LoginRequest request);
-    LogoutResponse logout(LogoutRequest request);
-
-    LogoutResponse logout(String token);
+    void logout();
 }
