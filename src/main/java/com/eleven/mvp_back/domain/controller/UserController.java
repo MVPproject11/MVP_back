@@ -1,6 +1,6 @@
 package com.eleven.mvp_back.domain.controller;
 
-import com.eleven.mvp_back.common.ApiResponse;
+import com.eleven.mvp_back.common.CommonResponse;
 import com.eleven.mvp_back.domain.dto.request.LoginRequest;
 import com.eleven.mvp_back.domain.dto.request.LogoutRequest;
 import com.eleven.mvp_back.domain.dto.request.SignupRequest;
@@ -9,14 +9,17 @@ import com.eleven.mvp_back.domain.dto.response.LogoutResponse;
 import com.eleven.mvp_back.domain.dto.response.SignupResponse;
 import com.eleven.mvp_back.domain.service.UserService;
 import com.eleven.mvp_back.security.JwtTokenProvider;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-
+@Tag(name = "사용자 인증 API", description = "회원가입, 로그인 및 로그아웃 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
@@ -25,29 +28,47 @@ public class UserController {
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Operation(summary = "회원가입", description = "새로운 사용자를 등록합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "회원가입 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청 (필수 값 누락 등)"),
+            @ApiResponse(responseCode = "500", description = "서버 내부 오류")
+    })
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<SignupResponse>> signUpUser(@Valid @RequestBody SignupRequest request) {
+    public ResponseEntity<CommonResponse<SignupResponse>> signUpUser(@Valid @RequestBody SignupRequest request) {
         SignupResponse response = userService.signup(request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.created("회원가입에 성공하셨습니다.", response));
+                .body(CommonResponse.created("회원가입에 성공하셨습니다.", response));
     }
 
-
+    @Operation(summary = "로그인", description = "사용자가 로그인하고 JWT 토큰을 발급받습니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "로그인 성공"),
+            @ApiResponse(responseCode = "401", description = "인증 실패 (잘못된 자격 증명)"),
+            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음"),
+            @ApiResponse(responseCode = "500", description = "서버 내부 오류")
+    })
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<CommonResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest request) {
         LoginResponse response = userService.login(request);
         String token = jwtTokenProvider.createToken(response.userId(), response.email(), response.role());
 
         return ResponseEntity.status(HttpStatus.OK)
                 .header("Authorization", "Bearer " + token)
-                .body(ApiResponse.success("로그인 성공", response));
+                .body(CommonResponse.success("로그인 성공", response));
     }
 
+    @Operation(summary = "로그아웃", description = "사용자가 로그아웃합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "로그아웃 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청 (유효하지 않은 토큰)"),
+            @ApiResponse(responseCode = "500", description = "서버 내부 오류")
+    })
     @PostMapping("/logout")
-    public ResponseEntity<ApiResponse<LogoutResponse>> logout(@Valid @RequestBody LogoutRequest request) {
+    public ResponseEntity<CommonResponse<LogoutResponse>> logout(@Valid @RequestBody LogoutRequest request) {
         String token = request.accessToken();
         LogoutResponse response = userService.logout(token);
-        return ResponseEntity.ok(ApiResponse.success(response.message(), response));
+        return ResponseEntity.ok(CommonResponse.success(response.message(), response));
     }
 }

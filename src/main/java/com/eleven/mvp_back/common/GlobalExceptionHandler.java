@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
 
 import java.util.stream.Collectors;
 
@@ -17,30 +16,30 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ApiResponse<?>> handleInvalidDataException(BadRequestException ex) {
+    public ResponseEntity<CommonResponse<?>> handleInvalidDataException(BadRequestException ex) {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponse<?>> handleResourceNotFoundException(ResourceNotFoundException ex) {
+    public ResponseEntity<CommonResponse<?>> handleResourceNotFoundException(ResourceNotFoundException ex) {
         return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(ResourceAlreadyExistException.class)
-    public ResponseEntity<ApiResponse<?>> handleDuplicateException(ResourceAlreadyExistException ex) {
+    public ResponseEntity<CommonResponse<?>> handleDuplicateException(ResourceAlreadyExistException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<?>> handleValidationException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<CommonResponse<?>> handleValidationException(MethodArgumentNotValidException ex) {
         String errorMessage = ex.getBindingResult().getFieldErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(", "));
         return buildErrorResponse(HttpStatus.BAD_REQUEST, errorMessage);
     }
 
-    private ResponseEntity<ApiResponse<?>> buildErrorResponse(HttpStatus status, String message) {
-        ApiResponse<?> response = ApiResponse.error(status.value(), message);
+    private ResponseEntity<CommonResponse<?>> buildErrorResponse(HttpStatus status, String message) {
+        CommonResponse<?> response = CommonResponse.error(status.value(), message);
         return new ResponseEntity<>(response, status);
     }
 }
