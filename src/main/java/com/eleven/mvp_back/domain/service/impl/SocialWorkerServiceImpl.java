@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,42 +41,16 @@ public class SocialWorkerServiceImpl implements SocialWorkerService {
             throw new BadRequestException("사회복지사 프로필은 사회복지사만 등록 가능합니다");
         }
 
-        String profileUrl;
-        if (request.socialworkerProfile() != null && !request.socialworkerProfile().isEmpty()) {
-            profileUrl = fileUploadService.uploadFile(request.socialworkerProfile());
-        } else {
-            profileUrl = null;
+        if (socialWorkerRepository.existsByUser(user)) {
+            throw new BadRequestException("이미 등록된 사회복지사입니다.");
         }
 
-        //TODO: aws s3로 이미지 url 저장하도록 추가예정
+        String profileUrl = (request.socialworkerProfile() != null && !request.socialworkerProfile().isEmpty())
+                ? fileUploadService.uploadFile(request.socialworkerProfile()) : null;
 
+        SocialWorker socialWorker = socialWorkerRepository.save(request.toEntity(user, profileUrl));
 
-        SocialWorker socialWorker = SocialWorker.builder()
-                .user(user)
-                .centerName(request.centerName())
-                .phoneNumber(request.phoneNumber())
-                .ownBathCar(request.ownBathCar())
-                .centerAddress(request.centerAddress())
-                .centerGrade(request.centerGrade())
-                .operationPeriod(request.operationPeriod())
-                .introduction(request.introduction())
-                .socialworkerProfile(profileUrl)
-                .createdAt(LocalDateTime.now())
-                .build();
-
-        SocialWorker saveSocialWorker = socialWorkerRepository.save(socialWorker);
-
-        return new SocialWorkerResponse(
-                saveSocialWorker.getId(),
-                saveSocialWorker.getCenterName(),
-                saveSocialWorker.getPhoneNumber(),
-                saveSocialWorker.isOwnBathCar(),
-                saveSocialWorker.getCenterAddress(),
-                saveSocialWorker.getCenterGrade(),
-                saveSocialWorker.getOperationPeriod(),
-                saveSocialWorker.getIntroduction(),
-                saveSocialWorker.getSocialworkerProfile()
-        );
+        return SocialWorkerResponse.fromEntity(socialWorker);
     }
 
     @Override
@@ -86,53 +59,17 @@ public class SocialWorkerServiceImpl implements SocialWorkerService {
         SocialWorker socialWorker = socialWorkerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 사회복지사를 찾을 수 없습니다."));
 
-        socialWorker.setCenterName(request.centerName());
-        socialWorker.setPhoneNumber(request.phoneNumber());
-        socialWorker.setOwnBathCar(request.ownBathCar());
-        socialWorker.setCenterAddress(request.centerAddress());
-        socialWorker.setCenterGrade(request.centerGrade());
-        socialWorker.setOperationPeriod(request.operationPeriod());
-        socialWorker.setIntroduction(request.introduction());
+        return  null;
 
-        // 프로필 이미지가 변경되었을 경우 업로드 처리
-        if (request.socialworkerProfile() != null && !request.socialworkerProfile().isEmpty()) {
-            String profileUrl = fileUploadService.uploadFile(request.socialworkerProfile());
-            socialWorker.setSocialworkerProfile(profileUrl);
-        }
-
-        socialWorker.setUpdatedAt(LocalDateTime.now());
-        socialWorkerRepository.save(socialWorker);
-
-        return new SocialWorkerResponse(
-                socialWorker.getId(),
-                socialWorker.getCenterName(),
-                socialWorker.getPhoneNumber(),
-                socialWorker.isOwnBathCar(),
-                socialWorker.getCenterAddress(),
-                socialWorker.getCenterGrade(),
-                socialWorker.getOperationPeriod(),
-                socialWorker.getIntroduction(),
-                socialWorker.getSocialworkerProfile()
-        );
     }
 
     @Override
-    public SocialWorkerResponse getSocialWorkerById(Long id) {
-        // 사회복지사 정보를 ID로 조회
-        SocialWorker socialWorker = socialWorkerRepository.findById(id)
+    public SocialWorkerResponse getSocialWorkerInfo(Long userId) {
+
+        SocialWorker socialWorker = socialWorkerRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("해당 사회복지사를 찾을 수 없습니다"));
 
-        return new SocialWorkerResponse(
-                socialWorker.getId(),
-                socialWorker.getCenterName(),
-                socialWorker.getPhoneNumber(),
-                socialWorker.isOwnBathCar(),
-                socialWorker.getCenterAddress(),
-                socialWorker.getCenterGrade(),
-                socialWorker.getOperationPeriod(),
-                socialWorker.getIntroduction(),
-                socialWorker.getSocialworkerProfile()
-        );
+        return SocialWorkerResponse.fromEntity(socialWorker);
     }
 
     @Override

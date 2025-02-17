@@ -30,14 +30,34 @@ public class SocialWorkerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "사회복지사 정보 등록 성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 요청 (필수 값 누락 등)"),
+            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
+            @ApiResponse(responseCode = "403", description = "권한 없음"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
     @PostMapping("/register")
-    public ResponseEntity<CommonResponse<SocialWorkerResponse>> registerSocialWorker(@Valid @ModelAttribute SocialWorkerRequest request,
-                                                                                     @AuthenticationPrincipal Long userId) throws IOException {
+    public ResponseEntity<CommonResponse<SocialWorkerResponse>> registerSocialWorker(
+            @Valid @ModelAttribute SocialWorkerRequest request,
+            @AuthenticationPrincipal Long userId) throws IOException {
+
         SocialWorkerResponse response = socialWorkerService.registerSocialWorker(request, userId);
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CommonResponse.created("사회복지사 정보 등록 성공", response));
+    }
+
+    @Operation(summary = "사회복지사 본인 정보 조회", description = "사회복지사의 본인 정보를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "사회복지사 정보 조회 성공"),
+            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
+            @ApiResponse(responseCode = "403", description = "권한 없음"),
+            @ApiResponse(responseCode = "404", description = "사회복지사 정보 없음"),
+            @ApiResponse(responseCode = "500", description = "서버 내부 오류")
+    })
+    @GetMapping("/me")
+    public ResponseEntity<CommonResponse<SocialWorkerResponse>> getSocialWorkerInfo(@AuthenticationPrincipal Long userId) {
+
+        SocialWorkerResponse response = socialWorkerService.getSocialWorkerInfo(userId);
+        return ResponseEntity.ok(CommonResponse.success("사회복지사 정보 조회 성공", response));
     }
 
     @Operation(summary = "사회복지사 정보 수정", description = "특정 사회복지사의 정보를 수정합니다.")
@@ -55,17 +75,7 @@ public class SocialWorkerController {
         return ResponseEntity.ok(CommonResponse.success("사회복지사 정보 수정 성공", response));
     }
 
-    @Operation(summary = "특정 사회복지사 정보 조회", description = "특정 사회복지사의 정보를 조회합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "사회복지사 정보 조회 성공"),
-            @ApiResponse(responseCode = "404", description = "사회복지사 정보 없음"),
-            @ApiResponse(responseCode = "500", description = "서버 내부 오류")
-    })
-    @GetMapping("/{id}")
-    public ResponseEntity<CommonResponse<SocialWorkerResponse>> getSocialWorkerById(@PathVariable Long id) {
-        SocialWorkerResponse response = socialWorkerService.getSocialWorkerById(id);
-        return ResponseEntity.ok(CommonResponse.success("사회복지사 정보 조회 성공", response));
-    }
+
 
     @Operation(summary = "전체 사회복지사 목록 조회", description = "등록된 모든 사회복지사의 정보를 조회합니다.")
     @ApiResponses(value = {
