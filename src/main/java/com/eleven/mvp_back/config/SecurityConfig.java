@@ -37,11 +37,11 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // 모든 요청을 허용 (테스트)
-                )
-                // TODO: 구현 끝난 후 변경
                 /*.authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll() // 모든 요청을 허용 (테스트)
+                )*/
+                // TODO: 구현 끝난 후 변경
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
                                 "/swagger-ui/**", "/swagger-resources/**",
@@ -49,7 +49,7 @@ public class SecurityConfig {
                                 "/h2-console/**",
                                 "/api/auth/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
-                )*/
+                )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
         return http.build();

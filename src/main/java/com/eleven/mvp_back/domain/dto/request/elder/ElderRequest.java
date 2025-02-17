@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.dto.request.elder;
 
+import com.eleven.mvp_back.domain.entity.Elder;
 import com.eleven.mvp_back.domain.enums.CareGrade;
 import com.eleven.mvp_back.domain.enums.Gender;
 import com.eleven.mvp_back.domain.enums.Housemate;
@@ -10,6 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -63,4 +65,21 @@ public record ElderRequest(
         @NotEmpty(message = "일상생활 보조 항목을 최소 한 개 이상 선택해야 합니다.")
         List<ElderDailyLivingAssistsRequest> dailyLivingAssists
 ) {
+    public Elder toEntity(String elderPhotoUrl) {
+        return Elder.builder()
+                .name(this.name())
+                .birth(this.birth())
+                .gender(this.gender())
+                .careGrade(this.careGrade())
+                .elderPhoto(elderPhotoUrl)
+                .elderAddress(this.elderAddress())
+                .weight(this.weight())
+                .disease(this.disease())
+                .housemate(this.housemate())
+                .symptomsDementia(this.symptomsDementia())
+                .careStartTime(this.careStartTime())
+                .careEndTime(this.careEndTime())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
 }

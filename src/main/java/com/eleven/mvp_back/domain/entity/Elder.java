@@ -72,21 +72,27 @@ public class Elder {
     @Column
     private LocalDateTime updatedAt;
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderCareDays> careDays = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderDailyLivingAssist> dailyLivingAssists = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderExcretionAssist> excretionAssists = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderMealAssist> mealAssists = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderMoveAssist> moveAssists = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SocialworkerElder> socialworkerElder = new ArrayList<>();
 
