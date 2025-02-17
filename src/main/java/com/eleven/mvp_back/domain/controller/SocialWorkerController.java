@@ -38,7 +38,7 @@ public class SocialWorkerController {
     public ResponseEntity<CommonResponse<SocialWorkerResponse>> registerSocialWorker(
             @Valid @ModelAttribute SocialWorkerRequest request,
             @AuthenticationPrincipal Long userId) throws IOException {
-
+      
         SocialWorkerResponse response = socialWorkerService.registerSocialWorker(request, userId);
 
         return ResponseEntity.status(HttpStatus.CREATED)
