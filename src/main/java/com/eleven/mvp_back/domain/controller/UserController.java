@@ -59,16 +59,14 @@ public class UserController {
                 .body(CommonResponse.success("로그인 성공", response));
     }
 
-    @Operation(summary = "로그아웃", description = "사용자가 로그아웃합니다.")
+    @Operation(summary = "로그아웃", description = "서버측에서는 SecurityContext를 초기화")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "로그아웃 성공"),
-            @ApiResponse(responseCode = "400", description = "잘못된 요청 (유효하지 않은 토큰)"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
     @PostMapping("/logout")
-    public ResponseEntity<CommonResponse<LogoutResponse>> logout(@Valid @RequestBody LogoutRequest request) {
-        String token = request.accessToken();
-        LogoutResponse response = userService.logout(token);
-        return ResponseEntity.ok(CommonResponse.success(response.message(), response));
+    public ResponseEntity<CommonResponse<Void>> logout() {
+        userService.logout();
+        return ResponseEntity.ok(CommonResponse.noContent("로그아웃 성공"));
     }
 }
