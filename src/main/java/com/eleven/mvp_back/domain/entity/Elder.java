@@ -72,21 +72,27 @@ public class Elder {
     @Column
     private LocalDateTime updatedAt;
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderCareDays> careDays = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderDailyLivingAssist> dailyLivingAssists = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderExcretionAssist> excretionAssists = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderMealAssist> mealAssists = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElderMoveAssist> moveAssists = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SocialworkerElder> socialworkerElder = new ArrayList<>();
 
@@ -117,17 +123,17 @@ public class Elder {
     }
 
     public void updateFromRequest(ElderRequest elderRequest) {
-        this.name = elderRequest.getName();
-        this.birth = elderRequest.getBirth();
-        this.gender = elderRequest.getGender();
-        this.careGrade = elderRequest.getCareGrade();
-        this.elderAddress = elderRequest.getElderAddress();
-        this.weight = elderRequest.getWeight();
-        this.disease = elderRequest.getDisease();
-        this.housemate = elderRequest.getHousemate();
-        this.symptomsDementia = elderRequest.getSymptomsDementia();
-        this.careStartTime = elderRequest.getCareStartTime();
-        this.careEndTime = elderRequest.getCareEndTime();
+        this.name = elderRequest.name();
+        this.birth = elderRequest.birth();
+        this.gender = elderRequest.gender();
+        this.careGrade = elderRequest.careGrade();
+        this.elderAddress = elderRequest.elderAddress();
+        this.weight = elderRequest.weight();
+        this.disease = elderRequest.disease();
+        this.housemate = elderRequest.housemate();
+        this.symptomsDementia = elderRequest.symptomsDementia();
+        this.careStartTime = elderRequest.careStartTime();
+        this.careEndTime = elderRequest.careEndTime();
         this.updatedAt = LocalDateTime.now();
     }
 

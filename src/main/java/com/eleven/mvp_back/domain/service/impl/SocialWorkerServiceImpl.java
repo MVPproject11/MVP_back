@@ -1,7 +1,7 @@
 package com.eleven.mvp_back.domain.service.impl;
 
-import com.eleven.mvp_back.domain.dto.request.SocialWorkerRequest;
-import com.eleven.mvp_back.domain.dto.response.SocialWorkerResponse;
+import com.eleven.mvp_back.domain.dto.request.socialworker.SocialWorkerRequest;
+import com.eleven.mvp_back.domain.dto.response.socialworker.SocialWorkerResponse;
 import com.eleven.mvp_back.domain.entity.SocialWorker;
 import com.eleven.mvp_back.domain.entity.User;
 import com.eleven.mvp_back.domain.enums.Role;

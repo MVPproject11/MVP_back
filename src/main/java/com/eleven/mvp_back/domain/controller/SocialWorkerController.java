@@ -1,8 +1,8 @@
 package com.eleven.mvp_back.domain.controller;
 
 import com.eleven.mvp_back.common.CommonResponse;
-import com.eleven.mvp_back.domain.dto.request.SocialWorkerRequest;
-import com.eleven.mvp_back.domain.dto.response.SocialWorkerResponse;
+import com.eleven.mvp_back.domain.dto.request.socialworker.SocialWorkerRequest;
+import com.eleven.mvp_back.domain.dto.response.socialworker.SocialWorkerResponse;
 import com.eleven.mvp_back.domain.service.SocialWorkerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,7 +16,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @Tag(name = "사회복지사 API", description = "사회복지사 관련 API")
 @RestController
