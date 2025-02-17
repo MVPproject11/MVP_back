@@ -1,5 +1,7 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.request.caregiver.CaregiverRequest;
+import com.eleven.mvp_back.domain.dto.response.caregiver.CaregiverResponse;
 import com.eleven.mvp_back.domain.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -75,4 +77,46 @@ public class Caregiver {
 
     @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
     private List<Matching> matchings = new ArrayList<>();
+
+    public void updateProfile(String profileUrl) {
+        this.caregiverProfile = profileUrl;
+    }
+
+    public void updateCaregiverInfo(CaregiverRequest request) {
+        this.name = request.name();
+        this.gender = request.gender();
+        this.phoneNumber = request.phoneNumber();
+        this.ownCar = request.ownCar();
+        this.dementiaTraining = request.dementiaTraining();
+        this.desiredWage = request.desiredWage();
+        this.careerPeriod = request.careerPeriod();
+        this.mainCareer = request.mainCareer();
+        this.introduction = request.introduction();
+        this.availableStartTime = request.availableStartTime();
+        this.availableEndTime = request.availableEndTime();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public CaregiverResponse toResponse(List<CaregiverAvailableDay> availableDays,
+                                        List<CaregiverLocation> locations,
+                                        List<Certification> certifications) {
+        return new CaregiverResponse(
+                this.getId(),
+                this.getName(),
+                this.getGender(),
+                this.getPhoneNumber(),
+                this.getCaregiverProfile(),
+                this.isOwnCar(),
+                this.isDementiaTraining(),
+                this.getDesiredWage(),
+                this.getCareerPeriod(),
+                this.getMainCareer(),
+                this.getIntroduction(),
+                this.getAvailableStartTime(),
+                this.getAvailableEndTime(),
+                availableDays.stream().map(CaregiverAvailableDay::toResponse).toList(),
+                locations.stream().map(CaregiverLocation::toResponse).toList(),
+                certifications.stream().map(Certification::toResponse).toList()
+        );
+    }
 }

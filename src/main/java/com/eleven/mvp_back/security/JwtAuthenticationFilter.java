@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collections;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -30,6 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // 회원가입 및 로그인 요청은 필터를 거치지 않고 다음 필터로 넘김
         if (requestURI.startsWith("/api/auth")) {
+            log.info("`/api/auth/**` 요청이므로 JWT 필터를 통과합니다.");
             filterChain.doFilter(request, response);
             return;
         }

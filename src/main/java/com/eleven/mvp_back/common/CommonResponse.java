@@ -10,14 +10,14 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ApiResponse<T> {
+public class CommonResponse<T> {
     private int code;
     private String message;
     private T data;
 
     //200-OK
-    public static <T> ApiResponse<T> success(T data) {
-        return ApiResponse.<T>builder()
+    public static <T> CommonResponse<T> success(T data) {
+        return CommonResponse.<T>builder()
                 .code(HttpStatus.OK.value())
                 .message("Success")
                 .data(data)
@@ -25,8 +25,8 @@ public class ApiResponse<T> {
     }
 
     //200-OK
-    public static <T> ApiResponse<T> success(String message, T data) {
-        return ApiResponse.<T>builder()
+    public static <T> CommonResponse<T> success(String message, T data) {
+        return CommonResponse.<T>builder()
                 .code(HttpStatus.OK.value())
                 .message(message)
                 .data(data)
@@ -34,8 +34,8 @@ public class ApiResponse<T> {
     }
 
     //201-CREATED
-    public static <T> ApiResponse<T> created(String message, T data) {
-        return ApiResponse.<T>builder()
+    public static <T> CommonResponse<T> created(String message, T data) {
+        return CommonResponse.<T>builder()
                 .code(HttpStatus.CREATED.value())
                 .message(message)
                 .data(data)
@@ -43,8 +43,8 @@ public class ApiResponse<T> {
     }
 
     //204-NO CONTENT
-    public static <T> ApiResponse<T> noContent(String message) {
-        return ApiResponse.<T>builder()
+    public static <T> CommonResponse<T> noContent(String message) {
+        return CommonResponse.<T>builder()
                 .code(HttpStatus.NO_CONTENT.value())
                 .message(message)
                 .data(null)
@@ -52,8 +52,8 @@ public class ApiResponse<T> {
     }
 
     //에러
-    public static <T> ApiResponse<T> error(int code, String message) {
-        return ApiResponse.<T>builder()
+    public static <T> CommonResponse<T> error(int code, String message) {
+        return CommonResponse.<T>builder()
                 .code(code)
                 .message(message)
                 .data(null)
