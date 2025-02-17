@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.response.elder.ElderMealAssistsResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,9 +25,7 @@ public class ElderMealAssist {
     @Column(nullable = false, length = 50)
     private String mealServiceName;
 
-    // 새로운 생성자 추가
-    public ElderMealAssist(Elder elder, String mealServiceName) {
-        this.elder = elder;
-        this.mealServiceName = mealServiceName;
+    public ElderMealAssistsResponse toResponse() {
+        return new ElderMealAssistsResponse(this.getMealServiceName());
     }
 }

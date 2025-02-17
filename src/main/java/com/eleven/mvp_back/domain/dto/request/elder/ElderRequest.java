@@ -1,15 +1,15 @@
-package com.eleven.mvp_back.domain.dto.request;
+package com.eleven.mvp_back.domain.dto.request.elder;
 
 import com.eleven.mvp_back.domain.entity.Elder;
 import com.eleven.mvp_back.domain.enums.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -26,7 +26,7 @@ public class ElderRequest {
     @NotNull(message = "장기요양등급은 필수입력 항목입니다.")
     private CareGrade careGrade;
 
-    private String elderPhoto;
+    private MultipartFile elderPhoto;
 
     @NotBlank(message = "주소는 필수입력 항목입니다.")
     private String elderAddress;
@@ -38,20 +38,20 @@ public class ElderRequest {
     private LocalTime careStartTime;
     private LocalTime careEndTime;
 
-    private List<Weekday> careDays;
-    private List<String> mealAssists;
-    private List<String> excretionAssists;
-    private List<String> moveAssists;
-    private List<String> dailyLivingAssists;
+    private List<ElderCareDaysRequest> careDays;
+    private List<ElderMealAssistsRequset> mealAssists;
+    private List<ElderExcretionAssistsRequest> excretionAssists;
+    private List<ElderMoveAssistsRequest> moveAssists;
+    private List<ElderDailyLivingAssistsRequest> dailyLivingAssists;
     private Long socialWorkerId;
 
-    public Elder toElder() {
+    public Elder toElder(String profileUrl) {
         return Elder.builder()
                 .name(this.name)
                 .birth(this.birth)
                 .gender(this.gender)
                 .careGrade(this.careGrade)
-                .elderPhoto(this.elderPhoto)
+                .elderPhoto(profileUrl)
                 .elderAddress(this.elderAddress)
                 .weight(this.weight)
                 .disease(this.disease)

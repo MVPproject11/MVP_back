@@ -1,6 +1,7 @@
 package com.eleven.mvp_back.domain.entity;
 
-import com.eleven.mvp_back.domain.dto.request.ElderRequest;
+import com.eleven.mvp_back.domain.dto.request.elder.*;
+import com.eleven.mvp_back.domain.dto.response.elder.ElderResponse;
 import com.eleven.mvp_back.domain.enums.CareGrade;
 import com.eleven.mvp_back.domain.enums.Gender;
 import com.eleven.mvp_back.domain.enums.Housemate;
@@ -89,12 +90,37 @@ public class Elder {
     @OneToMany(mappedBy = "elder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SocialworkerElder> socialworkerElder = new ArrayList<>();
 
+    public ElderResponse toResponse(List<ElderCareDays> careDays, List<ElderMealAssist> meals,
+                                    List<ElderExcretionAssist> excretions, List<ElderMoveAssist> moves,
+                                    List<ElderDailyLivingAssist> dailyLivings, List<SocialworkerElder> socialWorkerId) {
+        return new ElderResponse(
+                this.getId(),
+                this.getName(),
+                this.getBirth(),
+                this.getGender(),
+                this.getCareGrade(),
+                this.getElderPhoto(),
+                this.getElderAddress(),
+                this.getWeight(),
+                this.getDisease(),
+                this.getHousemate(),
+                this.getSymptomsDementia(),
+                this.getCareStartTime(),
+                this.getCareEndTime(),
+                careDays.stream().map(ElderCareDays::toResponse).toList(),
+                meals.stream().map(ElderMealAssist::toResponse).toList(),
+                excretions.stream().map(ElderExcretionAssist::toResponse).toList(),
+                moves.stream().map(ElderMoveAssist::toResponse).toList(),
+                dailyLivings.stream().map(ElderDailyLivingAssist::toResponse).toList(),
+                socialWorkerId.stream().map(SocialworkerElder::toResponse).toList()
+        );
+    }
+
     public void updateFromRequest(ElderRequest elderRequest) {
         this.name = elderRequest.getName();
         this.birth = elderRequest.getBirth();
         this.gender = elderRequest.getGender();
         this.careGrade = elderRequest.getCareGrade();
-        this.elderPhoto = elderRequest.getElderPhoto();
         this.elderAddress = elderRequest.getElderAddress();
         this.weight = elderRequest.getWeight();
         this.disease = elderRequest.getDisease();
@@ -103,31 +129,9 @@ public class Elder {
         this.careStartTime = elderRequest.getCareStartTime();
         this.careEndTime = elderRequest.getCareEndTime();
         this.updatedAt = LocalDateTime.now();
+    }
 
-        // 연관 데이터 업데이트
-        this.careDays.clear();
-        elderRequest.getCareDays().forEach(day ->
-                this.careDays.add(new ElderCareDays(this, day))
-        );
-
-        this.mealAssists.clear();
-        elderRequest.getMealAssists().forEach(assist ->
-                this.mealAssists.add(new ElderMealAssist(this, assist))
-        );
-
-        this.excretionAssists.clear();
-        elderRequest.getExcretionAssists().forEach(assist ->
-                this.excretionAssists.add(new ElderExcretionAssist(this, assist))
-        );
-
-        this.moveAssists.clear();
-        elderRequest.getMoveAssists().forEach(assist ->
-                this.moveAssists.add(new ElderMoveAssist(this, assist))
-        );
-
-        this.dailyLivingAssists.clear();
-        elderRequest.getDailyLivingAssists().forEach(assist ->
-                this.dailyLivingAssists.add(new ElderDailyLivingAssist(this, assist))
-        );
+    public void updateProfile(String profileUrl) {
+        this.elderPhoto = profileUrl;
     }
 }

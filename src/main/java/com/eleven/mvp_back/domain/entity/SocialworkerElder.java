@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.response.elder.SocialWorkerElderResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,4 +24,8 @@ public class SocialworkerElder {
     @ManyToOne
     @JoinColumn(name = "elder_id", nullable = false)
     private Elder elder;
+
+    public SocialWorkerElderResponse toResponse() {
+        return new SocialWorkerElderResponse(this.getSocialWorker().getId());
+    }
 }

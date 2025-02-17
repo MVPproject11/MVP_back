@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.entity;
 
+import com.eleven.mvp_back.domain.dto.response.elder.ElderMoveAssistsResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,9 +24,7 @@ public class ElderMoveAssist {
     @Column(nullable = false, length = 50)
     private String moveServiceName;
 
-    // 새로운 생성자 추가
-    public ElderMoveAssist(Elder elder, String moveServiceName) {
-        this.elder = elder;
-        this.moveServiceName = moveServiceName;
+    public ElderMoveAssistsResponse toResponse() {
+        return new ElderMoveAssistsResponse(this.getMoveServiceName());
     }
 }
