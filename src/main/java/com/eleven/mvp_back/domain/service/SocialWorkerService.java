@@ -1,10 +1,9 @@
 package com.eleven.mvp_back.domain.service;
 
-import com.eleven.mvp_back.domain.dto.request.SocialWorkerRequest;
-import com.eleven.mvp_back.domain.dto.response.SocialWorkerResponse;
+import com.eleven.mvp_back.domain.dto.request.socialworker.SocialWorkerRequest;
+import com.eleven.mvp_back.domain.dto.response.socialworker.SocialWorkerResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface SocialWorkerService {
     SocialWorkerResponse registerSocialWorker(SocialWorkerRequest request, Long userId) throws IOException;

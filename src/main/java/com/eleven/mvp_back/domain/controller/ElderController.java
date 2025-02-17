@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,7 @@ import java.util.List;
 
 @Tag(name = "어르신 API", description = "어르신 관련 API")
 @RestController
-@RequestMapping("/api/elder")
+@RequestMapping("/api/elders")
 @RequiredArgsConstructor
 public class ElderController {
     private final ElderService elderService;
@@ -33,17 +34,12 @@ public class ElderController {
             @ApiResponse(responseCode = "400", description = "잘못된 요청 (필수 값 누락 등)"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
-    @PostMapping(value = "/register/{socialWorkerId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public CommonResponse<ElderResponse> registerElder(@PathVariable Long socialWorkerId,
+    @PostMapping("/register")
+    public CommonResponse<ElderResponse> registerElder(@AuthenticationPrincipal Long socialWorkerId,
                                                        @Valid @ModelAttribute ElderRequest elderRequest) {
-        try {
-            ElderResponse response = elderService.registerElder(socialWorkerId, elderRequest);
-            return CommonResponse.success("어르신 등록 성공", response);
-        } catch (ResourceNotFoundException e) {
-            return CommonResponse.error(500, e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+        ElderResponse response = elderService.registerElder(socialWorkerId, elderRequest);
+        return CommonResponse.created("어르신 등록 성공", response);
     }
 
     // 2. 사회복지사가 담당하는 어르신 정보 조회
@@ -53,14 +49,10 @@ public class ElderController {
             @ApiResponse(responseCode = "404", description = "해당 사회복지사가 담당하는 어르신 없음"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
-    @GetMapping("/social/{socialWorkerId}")
-    public CommonResponse<List<ElderResponse>> getEldersBySocialWorker(@PathVariable Long socialWorkerId) {
-        try {
-            List<ElderResponse> responses = elderService.getEldersBySocialWorker(socialWorkerId);
-            return CommonResponse.success(responses);
-        } catch (ResourceNotFoundException e) {
-            return CommonResponse.error(500, e.getMessage());
-        }
+    @GetMapping
+    public CommonResponse<List<ElderResponse>> getMyElders(@AuthenticationPrincipal Long socialWorkerId) {
+        List<ElderResponse> responses = elderService.getEldersBySocialWorker(socialWorkerId);
+        return CommonResponse.success(responses);
     }
 
     // 3. 특정 어르신 정보 조회
@@ -72,12 +64,8 @@ public class ElderController {
     })
     @GetMapping("/{elderId}")
     public CommonResponse<ElderResponse> getElderById(@PathVariable Long elderId) {
-        try {
-            ElderResponse response = elderService.getElderById(elderId);
-            return CommonResponse.success(response);
-        } catch (ResourceNotFoundException e) {
-            return CommonResponse.error(500, e.getMessage());
-        }
+        ElderResponse response = elderService.getElderById(elderId);
+        return CommonResponse.success(response);
     }
 
     // 4. 특정 어르신 정보 수정
@@ -88,19 +76,11 @@ public class ElderController {
             @ApiResponse(responseCode = "404", description = "어르신 정보 없음"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
-    @PutMapping(value = "/{elderId}/{socialWorkerId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping("/{elderId}")
     public CommonResponse<ElderResponse> updateElderAndSocialWorker(@PathVariable Long elderId,
-                                                                    @PathVariable Long socialWorkerId,
-                                                                    @RequestPart("elderPhoto") MultipartFile elderPhoto,
-                                                                    @Valid @RequestPart("elderRequest") ElderRequest elderRequest) {
-        try {
-            ElderResponse response = elderService.updateElder(elderId, socialWorkerId, elderRequest, elderPhoto);
-            return CommonResponse.success("어르신 정보 수정에 성공하였습니다.", response);
-        } catch (ResourceNotFoundException | BadRequestException e) {
-            return CommonResponse.error(500, e.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+                                                                    @AuthenticationPrincipal Long socialWorkerId,
+                                                                    @Valid @ModelAttribute ElderRequest elderRequest) {
+
     }
 
     // 5. 특정 어르신 정보 삭제

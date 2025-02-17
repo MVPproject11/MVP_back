@@ -36,8 +36,8 @@ public class ElderService {
                 .orElseThrow(() -> new ResourceNotFoundException("사회복지사 정보를 찾을 수 없습니다.", socialWorkerId));
 
 
-        String profileUrl = (elderRequest.getElderPhoto() != null && !elderRequest.getElderPhoto().isEmpty())
-                ? fileUploadService.uploadFile(elderRequest.getElderPhoto()) : null;
+        String profileUrl = (elderRequest.elderPhoto() != null && !elderRequest.elderPhoto().isEmpty())
+                ? fileUploadService.uploadFile(elderRequest.elderPhoto()) : null;
 
         Elder newElder = elderRepository.save(elderRequest.toElder(profileUrl));
 
@@ -78,7 +78,7 @@ public class ElderService {
     }
 
     @Transactional
-    public ElderResponse updateElder(Long elderId, Long newSocialWorkerId, ElderRequest elderRequest, MultipartFile elderPhoto) throws IOException {
+    public ElderResponse updateElder(Long elderId, Long socialWorkerId, ElderRequest elderRequest, MultipartFile elderPhoto) throws IOException {
         // 1. 노인 존재 여부 확인
         Elder elder = elderRepository.findById(elderId)
                 .orElseThrow(() -> new ResourceNotFoundException("어르신 정보를 찾을 수 없습니다.", elderId));

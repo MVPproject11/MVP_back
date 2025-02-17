@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.domain.dto.response;
+package com.eleven.mvp_back.domain.dto.response.socialworker;
 
 import com.eleven.mvp_back.domain.entity.SocialWorker;
 

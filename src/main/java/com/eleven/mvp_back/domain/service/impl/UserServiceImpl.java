@@ -1,11 +1,9 @@
 package com.eleven.mvp_back.domain.service.impl;
 
-import com.eleven.mvp_back.domain.dto.request.LoginRequest;
-import com.eleven.mvp_back.domain.dto.request.LogoutRequest;
-import com.eleven.mvp_back.domain.dto.request.SignupRequest;
-import com.eleven.mvp_back.domain.dto.response.LoginResponse;
-import com.eleven.mvp_back.domain.dto.response.LogoutResponse;
-import com.eleven.mvp_back.domain.dto.response.SignupResponse;
+import com.eleven.mvp_back.domain.dto.request.user.LoginRequest;
+import com.eleven.mvp_back.domain.dto.request.user.SignupRequest;
+import com.eleven.mvp_back.domain.dto.response.user.LoginResponse;
+import com.eleven.mvp_back.domain.dto.response.user.SignupResponse;
 import com.eleven.mvp_back.domain.entity.User;
 import com.eleven.mvp_back.domain.enums.Role;
 import com.eleven.mvp_back.domain.repository.UserRepository;

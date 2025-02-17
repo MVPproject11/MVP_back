@@ -117,17 +117,17 @@ public class Elder {
     }
 
     public void updateFromRequest(ElderRequest elderRequest) {
-        this.name = elderRequest.getName();
-        this.birth = elderRequest.getBirth();
-        this.gender = elderRequest.getGender();
-        this.careGrade = elderRequest.getCareGrade();
-        this.elderAddress = elderRequest.getElderAddress();
-        this.weight = elderRequest.getWeight();
-        this.disease = elderRequest.getDisease();
-        this.housemate = elderRequest.getHousemate();
-        this.symptomsDementia = elderRequest.getSymptomsDementia();
-        this.careStartTime = elderRequest.getCareStartTime();
-        this.careEndTime = elderRequest.getCareEndTime();
+        this.name = elderRequest.name();
+        this.birth = elderRequest.birth();
+        this.gender = elderRequest.gender();
+        this.careGrade = elderRequest.careGrade();
+        this.elderAddress = elderRequest.elderAddress();
+        this.weight = elderRequest.weight();
+        this.disease = elderRequest.disease();
+        this.housemate = elderRequest.housemate();
+        this.symptomsDementia = elderRequest.symptomsDementia();
+        this.careStartTime = elderRequest.careStartTime();
+        this.careEndTime = elderRequest.careEndTime();
         this.updatedAt = LocalDateTime.now();
     }
 
