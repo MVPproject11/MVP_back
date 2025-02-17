@@ -67,25 +67,26 @@ public class SocialWorkerController {
             @ApiResponse(responseCode = "404", description = "사회복지사 정보 없음"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
-    @PutMapping("/{id}")
+    @PutMapping("/me")
     public ResponseEntity<CommonResponse<SocialWorkerResponse>> updateSocialWorker(
-            @PathVariable Long id,
-            @Valid @RequestBody SocialWorkerRequest request) throws IOException {
-        SocialWorkerResponse response = socialWorkerService.updateSocialWorker(id, request);
+            @AuthenticationPrincipal Long userId,
+            @Valid @ModelAttribute SocialWorkerRequest request) throws IOException {
+
+        SocialWorkerResponse response = socialWorkerService.updateSocialWorker(userId, request);
+
         return ResponseEntity.ok(CommonResponse.success("사회복지사 정보 수정 성공", response));
     }
 
-
-
-    @Operation(summary = "전체 사회복지사 목록 조회", description = "등록된 모든 사회복지사의 정보를 조회합니다.")
+    @Operation(summary = "내 요양보호사 프로필 삭제", description = "현재 로그인한 사용자의 요양보호사 프로필을 삭제합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "전체 사회복지사 목록 조회 성공"),
+            @ApiResponse(responseCode = "200", description = "요양보호사 프로필 삭제 성공"),
+            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
+            @ApiResponse(responseCode = "404", description = "요양보호사 정보 없음"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
-    @GetMapping("")
-    public ResponseEntity<CommonResponse<List<SocialWorkerResponse>>> getAllSocialWorkers() {
-        List<SocialWorkerResponse> responseList = socialWorkerService.getAllSocialWorkers();
-        return ResponseEntity.ok(CommonResponse.success("전체 사회복지사 목록 조회 성공", responseList));
+    @DeleteMapping("/me")
+    public ResponseEntity<CommonResponse<Void>> deleteSocialworkerProfile(@AuthenticationPrincipal Long userId) {
+        socialWorkerService.deleteSocialWorkerInfo(userId);
+        return ResponseEntity.ok(CommonResponse.noContent("사회복지사 프로필 삭제 성공"));
     }
-
 }

@@ -114,7 +114,7 @@ public class CaregiverServiceImpl implements CaregiverService {
     @Override
     public void deleteCaregiverInfo(Long userId) {
         Caregiver caregiver = caregiverRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("등록된 요양보호사 정보를 찾을 . 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("등록된 요양보호사 정보를 찾을 수 없습니다."));
 
         if (caregiver.getCaregiverProfile() != null) {
             fileUploadService.deleteFile(caregiver.getCaregiverProfile());

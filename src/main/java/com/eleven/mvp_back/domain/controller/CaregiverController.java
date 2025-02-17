@@ -85,6 +85,6 @@ public class CaregiverController {
     @DeleteMapping("/me")
     public ResponseEntity<CommonResponse<Void>> deleteCaregiverProfile(@AuthenticationPrincipal Long userId) {
         caregiverService.deleteCaregiverInfo(userId);
-        return ResponseEntity.ok(CommonResponse.success("요양보호사 프로필 삭제 성공", null));
+        return ResponseEntity.ok(CommonResponse.noContent("요양보호사 프로필 삭제 성공"));
     }
 }

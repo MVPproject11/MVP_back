@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,16 +52,6 @@ public class SocialWorkerServiceImpl implements SocialWorkerService {
     }
 
     @Override
-    public SocialWorkerResponse updateSocialWorker(Long id, SocialWorkerRequest request) throws IOException {
-        //사회복지사 정보 수정 로직 추가
-        SocialWorker socialWorker = socialWorkerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 사회복지사를 찾을 수 없습니다."));
-
-        return  null;
-
-    }
-
-    @Override
     public SocialWorkerResponse getSocialWorkerInfo(Long userId) {
 
         SocialWorker socialWorker = socialWorkerRepository.findByUserId(userId)
@@ -72,22 +60,41 @@ public class SocialWorkerServiceImpl implements SocialWorkerService {
         return SocialWorkerResponse.fromEntity(socialWorker);
     }
 
+    @Transactional
     @Override
-    public List<SocialWorkerResponse> getAllSocialWorkers() {
-        // 모든 사회복지사 데이터를 조회하여 SocialWorkerResponse로 변환
-        List<SocialWorker> socialWorkers = socialWorkerRepository.findAll();
+    public SocialWorkerResponse updateSocialWorker(Long id, SocialWorkerRequest request) throws IOException {
+        //사회복지사 정보 수정 로직 추가
+        SocialWorker socialWorker = socialWorkerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("해당 사회복지사를 찾을 수 없습니다."));
 
-        return socialWorkers.stream()
-                .map(socialWorker -> new SocialWorkerResponse(
-                        socialWorker.getId(),
-                        socialWorker.getCenterName(),
-                        socialWorker.getPhoneNumber(),
-                        socialWorker.isOwnBathCar(),
-                        socialWorker.getCenterAddress(),
-                        socialWorker.getCenterGrade(),
-                        socialWorker.getOperationPeriod(),
-                        socialWorker.getIntroduction(),
-                        socialWorker.getSocialworkerProfile()))
-                .collect(Collectors.toList());
+        if (request.socialworkerProfile() != null && !request.socialworkerProfile().isEmpty()) {
+            if (socialWorker.getSocialworkerProfile() != null) {
+                fileUploadService.deleteFile(socialWorker.getSocialworkerProfile());
+            }
+            String newProfileUrl = fileUploadService.uploadFile(request.socialworkerProfile());
+            socialWorker.updateProfile(newProfileUrl);
+        } else {
+            if (socialWorker.getSocialworkerProfile() != null) {
+                fileUploadService.deleteFile(socialWorker.getSocialworkerProfile());
+                socialWorker.updateProfile(null);
+            }
+        }
+
+        socialWorker.updateInfo(request);
+
+        return SocialWorkerResponse.fromEntity(socialWorker);
+    }
+
+    @Transactional
+    @Override
+    public void deleteSocialWorkerInfo(Long userId) {
+        SocialWorker socialWorker = socialWorkerRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("등록된 사회복지사 정보를 찾을 수 없습니다."));
+
+        if (socialWorker.getSocialworkerProfile() != null) {
+            fileUploadService.deleteFile(socialWorker.getSocialworkerProfile());
+        }
+
+        socialWorkerRepository.delete(socialWorker);
     }
 }

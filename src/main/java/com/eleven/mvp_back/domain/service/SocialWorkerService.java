@@ -13,5 +13,5 @@ public interface SocialWorkerService {
 
     SocialWorkerResponse getSocialWorkerInfo(Long userId);
 
-    List<SocialWorkerResponse> getAllSocialWorkers();
+    void deleteSocialWorkerInfo(Long userId);
 }
