@@ -64,6 +64,7 @@ public class SocialWorkerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "사회복지사 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 요청 (필수 값 누락 등)"),
+            @ApiResponse(responseCode = "403", description = "권한 없음"),
             @ApiResponse(responseCode = "404", description = "사회복지사 정보 없음"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
@@ -81,6 +82,7 @@ public class SocialWorkerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "요양보호사 프로필 삭제 성공"),
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
+            @ApiResponse(responseCode = "403", description = "권한 없음"),
             @ApiResponse(responseCode = "404", description = "요양보호사 정보 없음"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
