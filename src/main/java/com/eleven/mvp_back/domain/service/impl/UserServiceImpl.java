@@ -16,6 +16,7 @@ import com.eleven.mvp_back.exception.ResourceNotFoundException;
 import com.eleven.mvp_back.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,26 +77,10 @@ public class UserServiceImpl implements UserService {
         return new LoginResponse(user.getId(), user.getEmail(), user.getRole().name());
     }
 
+    @Transactional
     @Override
-    public LogoutResponse logout(LogoutRequest request) {
-        String token = request.accessToken();
-        return logout(token);
-    }
-
-    @Override
-    public LogoutResponse logout(String token) {
-        if (token == null || !jwtTokenProvider.validateToken(token)) {
-            throw new BadRequestException("유효하지 않은 토큰입니다.");
-        }
-
-        blacklistedTokens.add(token);
-        log.info("로그아웃 처리된 토큰 : {}", token);
-
-        return new LogoutResponse(true, "로그아웃이 완료되었습니다.");
-    }
-
-    public boolean isBlacklistedToken(String token) {
-        return blacklistedTokens.contains(token);
+    public void logout() {
+        SecurityContextHolder.clearContext();
     }
 }
 

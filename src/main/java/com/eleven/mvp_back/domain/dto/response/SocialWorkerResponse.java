@@ -2,8 +2,6 @@ package com.eleven.mvp_back.domain.dto.response;
 
 import com.eleven.mvp_back.domain.entity.SocialWorker;
 
-import java.time.LocalDateTime;
-
 public record SocialWorkerResponse(
         Long id,
         String centerName,
@@ -17,7 +15,7 @@ public record SocialWorkerResponse(
 ) {
     public static SocialWorkerResponse fromEntity(SocialWorker socialWorker) {
         return new SocialWorkerResponse(
-                socialWorker.getId(), 
+                socialWorker.getId(),
                 socialWorker.getCenterName(),
                 socialWorker.getPhoneNumber(),
                 socialWorker.isOwnBathCar(),
