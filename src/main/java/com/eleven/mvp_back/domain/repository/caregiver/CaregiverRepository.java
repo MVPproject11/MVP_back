@@ -1,7 +1,7 @@
 package com.eleven.mvp_back.domain.repository.caregiver;
 
-import com.eleven.mvp_back.domain.entity.Caregiver;
-import com.eleven.mvp_back.domain.entity.User;
+import com.eleven.mvp_back.domain.entity.caregiver.Caregiver;
+import com.eleven.mvp_back.domain.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

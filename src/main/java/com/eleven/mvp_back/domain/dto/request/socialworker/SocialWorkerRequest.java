@@ -1,7 +1,7 @@
 package com.eleven.mvp_back.domain.dto.request.socialworker;
 
-import com.eleven.mvp_back.domain.entity.SocialWorker;
-import com.eleven.mvp_back.domain.entity.User;
+import com.eleven.mvp_back.domain.entity.socialworker.SocialWorker;
+import com.eleven.mvp_back.domain.entity.user.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

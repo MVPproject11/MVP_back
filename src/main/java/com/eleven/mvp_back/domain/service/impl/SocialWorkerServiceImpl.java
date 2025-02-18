@@ -2,11 +2,11 @@ package com.eleven.mvp_back.domain.service.impl;
 
 import com.eleven.mvp_back.domain.dto.request.socialworker.SocialWorkerRequest;
 import com.eleven.mvp_back.domain.dto.response.socialworker.SocialWorkerResponse;
-import com.eleven.mvp_back.domain.entity.SocialWorker;
-import com.eleven.mvp_back.domain.entity.User;
+import com.eleven.mvp_back.domain.entity.socialworker.SocialWorker;
+import com.eleven.mvp_back.domain.entity.user.User;
 import com.eleven.mvp_back.domain.enums.Role;
-import com.eleven.mvp_back.domain.repository.SocialWorkerRepository;
-import com.eleven.mvp_back.domain.repository.UserRepository;
+import com.eleven.mvp_back.domain.repository.socialworker.SocialWorkerRepository;
+import com.eleven.mvp_back.domain.repository.user.UserRepository;
 import com.eleven.mvp_back.domain.service.FileUploadService;
 import com.eleven.mvp_back.domain.service.SocialWorkerService;
 import com.eleven.mvp_back.exception.BadRequestException;
