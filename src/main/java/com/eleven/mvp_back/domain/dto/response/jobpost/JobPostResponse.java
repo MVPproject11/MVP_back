@@ -19,9 +19,10 @@ public record JobPostResponse(
         LocalTime postStartTime,
         LocalTime postEndTime,
         String managerPhone,
-        String managerEmail
+        String managerEmail,
+        String message
 ) {
-    public JobPostResponse fromEntity(JobPost jobPost) {
+    public JobPostResponse fromEntity(JobPost jobPost, String message) {
         if (jobPost == null) return null;
         return new JobPostResponse(
                 jobPost.getId(),
@@ -36,7 +37,8 @@ public record JobPostResponse(
                 jobPost.getPostStartTime(),
                 jobPost.getPostEndTime(),
                 jobPost.getManagerPhone(),
-                jobPost.getManagerEmail()
+                jobPost.getManagerEmail(),
+                message
         );
     }
 }
