@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,10 +61,10 @@ public class JobPost {
     private String status;
 
     @Column(name = "post_start_time", nullable = false)
-    private LocalDateTime postStartTime;
+    private LocalTime postStartTime;
 
     @Column(name = "post_end_time", nullable = false)
-    private LocalDateTime postEndTime;
+    private LocalTime postEndTime;
 
     private String managerPhone;
 
