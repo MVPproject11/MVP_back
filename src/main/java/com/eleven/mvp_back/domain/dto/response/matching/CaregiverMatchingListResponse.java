@@ -5,13 +5,13 @@ import com.eleven.mvp_back.domain.entity.socialworker.SocialWorker;
 import com.eleven.mvp_back.domain.enums.MatchingStatus;
 import com.eleven.mvp_back.domain.enums.ProgressStatus;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 public record CaregiverMatchingListResponse(
         Long matchingId,
         String centerName,
-        LocalTime postStartTime,
-        LocalTime postEndTime,
+        LocalDate postStartTime,
+        LocalDate postEndTime,
         String managerEmail,
         String managerPhone,
         MatchingStatus matchingStatus,

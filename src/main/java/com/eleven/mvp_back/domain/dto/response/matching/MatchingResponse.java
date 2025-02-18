@@ -4,14 +4,15 @@ import com.eleven.mvp_back.domain.entity.matching.Matching;
 import com.eleven.mvp_back.domain.enums.MatchingStatus;
 import com.eleven.mvp_back.domain.enums.ProgressStatus;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record MatchingResponse(
         Long matchingId,
         MatchingStatus matchingStatus,
         ProgressStatus progressStatus,
-        LocalTime requestDate,
-        LocalTime responseDate,
+        LocalDate requestDate,
+        LocalDate responseDate,
         String message
 ) {
     public static MatchingResponse fromEntity(Matching matching, String msg) {

@@ -4,7 +4,7 @@ import com.eleven.mvp_back.domain.entity.matching.Matching;
 import com.eleven.mvp_back.domain.enums.MatchingStatus;
 import com.eleven.mvp_back.domain.enums.ProgressStatus;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 public record SocialworkerMatchingListResponse(
         Long matchingId,
@@ -12,8 +12,8 @@ public record SocialworkerMatchingListResponse(
         String caregiverName,
         MatchingStatus matchingStatus,
         ProgressStatus progressStatus,
-        LocalTime requestDate,
-        LocalTime responseDate
+        LocalDate requestDate,
+        LocalDate responseDate
 ) {
     public static SocialworkerMatchingListResponse fromEntity(Matching matching) {
         return new SocialworkerMatchingListResponse(

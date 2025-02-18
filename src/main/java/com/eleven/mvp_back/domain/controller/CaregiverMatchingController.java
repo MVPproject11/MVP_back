@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CaregiverMatchingController {
 
-    private MatchingService matchingService;
+    private final MatchingService matchingService;
 
     @GetMapping
     public CommonResponse<List<CaregiverMatchingListResponse>> getMatchingsCaregiver(@AuthenticationPrincipal Long caregiverId) {

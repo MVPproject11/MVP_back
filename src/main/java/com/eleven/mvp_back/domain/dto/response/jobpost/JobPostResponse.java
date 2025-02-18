@@ -4,7 +4,7 @@ import com.eleven.mvp_back.domain.entity.jobpost.JobPost;
 import com.eleven.mvp_back.domain.enums.WageType;
 import com.eleven.mvp_back.domain.enums.WorkType;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 public record JobPostResponse(
         Long id,
@@ -16,8 +16,8 @@ public record JobPostResponse(
         String benefits,
         Integer needMember,
         String status,
-        LocalTime postStartTime,
-        LocalTime postEndTime,
+        LocalDate postStartTime,
+        LocalDate postEndTime,
         String managerPhone,
         String managerEmail,
         String message

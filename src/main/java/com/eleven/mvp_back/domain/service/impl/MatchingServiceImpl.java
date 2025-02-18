@@ -1,9 +1,7 @@
 package com.eleven.mvp_back.domain.service.impl;
 
 import com.eleven.mvp_back.domain.dto.request.matching.ProgressStatusRequest;
-import com.eleven.mvp_back.domain.dto.response.matching.CaregiverMatchingDetailResponse;
-import com.eleven.mvp_back.domain.dto.response.matching.CaregiverMatchingListResponse;
-import com.eleven.mvp_back.domain.dto.response.matching.MatchingResponse;
+import com.eleven.mvp_back.domain.dto.response.matching.*;
 import com.eleven.mvp_back.domain.entity.matching.Matching;
 import com.eleven.mvp_back.domain.enums.MatchingStatus;
 import com.eleven.mvp_back.domain.enums.ProgressStatus;
@@ -72,5 +70,22 @@ public class MatchingServiceImpl implements MatchingService {
         matchingRepository.save(matching);
 
         return MatchingResponse.fromEntity(matching, "매칭 상태가 변경되었습니다.");
+    }
+
+    @Override
+    public List<SocialworkerMatchingListResponse> getAllMatchingsSocialworker(Long socialworkerId) {
+        List<Matching> matchings = matchingRepository.findAllByJobpostSocialworkerElderSocialWorkerId(socialworkerId);
+
+        return matchings.stream()
+                .map(SocialworkerMatchingListResponse::fromEntity)
+                .toList();
+    }
+
+    @Override
+    public SocialworkerMatchingDetailResponse getMatchingDetailSocialworker(Long socialworkerId, Long matchingId) {
+        Matching matching = matchingRepository.findById(matchingId)
+                .orElseThrow(() -> new ResourceNotFoundException("매칭이 존재하지 않습니다."));
+
+        return SocialworkerMatchingDetailResponse.fromEntity(matching);
     }
 }

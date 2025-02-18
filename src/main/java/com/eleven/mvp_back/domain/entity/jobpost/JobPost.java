@@ -6,6 +6,7 @@ import com.eleven.mvp_back.domain.enums.WorkType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -61,10 +62,10 @@ public class JobPost {
     private String status;
 
     @Column(name = "post_start_time", nullable = false)
-    private LocalTime postStartTime;
+    private LocalDate postStartTime;
 
     @Column(name = "post_end_time", nullable = false)
-    private LocalTime postEndTime;
+    private LocalDate postEndTime;
 
     private String managerPhone;
 

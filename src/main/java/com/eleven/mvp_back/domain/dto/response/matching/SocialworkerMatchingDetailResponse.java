@@ -12,6 +12,7 @@ import com.eleven.mvp_back.domain.entity.socialworker.SocialWorker;
 import com.eleven.mvp_back.domain.enums.MatchingStatus;
 import com.eleven.mvp_back.domain.enums.ProgressStatus;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record SocialworkerMatchingDetailResponse(
@@ -25,8 +26,8 @@ public record SocialworkerMatchingDetailResponse(
 
         CaregiverResponse caregiver,        // 요양보호사 정보 (수락/조율/응답 시 보여줌)
 
-        LocalTime requestDate,
-        LocalTime responseDate
+        LocalDate requestDate,
+        LocalDate responseDate
 ) {
     public static SocialworkerMatchingDetailResponse fromEntity(Matching matching) {
         Long matchingId = matching.getId();

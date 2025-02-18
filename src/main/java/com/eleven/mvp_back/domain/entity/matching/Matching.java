@@ -7,6 +7,7 @@ import com.eleven.mvp_back.domain.enums.ProgressStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -40,9 +41,9 @@ public class Matching {
     private ProgressStatus progressStatus;
 
     @Column(nullable = false)
-    private LocalTime requestDate;
+    private LocalDate requestDate;
 
-    private LocalTime responseDate;
+    private LocalDate responseDate;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
