@@ -1,5 +1,6 @@
 package com.eleven.mvp_back.domain.controller;
 
+import com.eleven.mvp_back.common.CommonResponse;
 import com.eleven.mvp_back.domain.dto.request.jobpost.JobPostRequest;
 import com.eleven.mvp_back.domain.dto.response.jobpost.JobPostResponse;
 import com.eleven.mvp_back.domain.entity.jobpost.JobPost;
@@ -17,10 +18,11 @@ public class JobPostController {
     private final JopPostService jopPostService;
 
     @PostMapping("/jobposts")
-    public JobPostResponse createJobPost(@AuthenticationPrincipal Long socialworkerId,
-                                         @PathVariable Long elderId,
-                                         @Valid @RequestBody JobPostRequest request) {
+    public CommonResponse<JobPostResponse> createJobPost(@AuthenticationPrincipal Long socialworkerId,
+                                                        @PathVariable Long elderId,
+                                                        @Valid @RequestBody JobPostRequest request) {
 
-        return jopPostService.createJobPost(socialworkerId, elderId, request);
+        JobPostResponse response = jopPostService.createJobPost(socialworkerId, elderId, request);
+        CommonResponse.created("구인공고 생성 완료 및 매칭 전달", response);
     }
 }
