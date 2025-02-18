@@ -17,7 +17,7 @@ public record CaregiverMatchingListResponse(
         MatchingStatus matchingStatus,
         ProgressStatus progressStatus
 ) {
-    public CaregiverMatchingListResponse fromEntity(Matching matching) {
+    public static CaregiverMatchingListResponse fromEntity(Matching matching) {
         SocialWorker socialWorker = matching.getJobpost()
                 .getSocialworkerElder().getSocialWorker();
 

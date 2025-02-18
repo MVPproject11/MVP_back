@@ -48,4 +48,10 @@ public class Matching {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    public void updateStatus(ProgressStatus progressStatus, MatchingStatus matchingStatus) {
+        this.progressStatus = progressStatus;
+        this.matchingStatus = matchingStatus;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

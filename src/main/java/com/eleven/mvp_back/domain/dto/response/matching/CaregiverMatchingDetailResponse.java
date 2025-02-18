@@ -21,7 +21,7 @@ public record CaregiverMatchingDetailResponse(
 
         JobPostResponse jobPostResponse
 ) {
-    public CaregiverMatchingDetailResponse fromEntity(Matching matching) {
+    public static CaregiverMatchingDetailResponse fromEntity(Matching matching) {
         Long matchingId = matching.getId();
         MatchingStatus matchingStatus = matching.getMatchingStatus();
         ProgressStatus progressStatus = matching.getProgressStatus();

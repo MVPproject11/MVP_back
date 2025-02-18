@@ -3,7 +3,6 @@ package com.eleven.mvp_back.domain.controller;
 import com.eleven.mvp_back.common.CommonResponse;
 import com.eleven.mvp_back.domain.dto.request.jobpost.JobPostRequest;
 import com.eleven.mvp_back.domain.dto.response.jobpost.JobPostResponse;
-import com.eleven.mvp_back.domain.entity.jobpost.JobPost;
 import com.eleven.mvp_back.domain.service.JopPostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +22,6 @@ public class JobPostController {
                                                         @Valid @RequestBody JobPostRequest request) {
 
         JobPostResponse response = jopPostService.createJobPost(socialworkerId, elderId, request);
-        CommonResponse.created("구인공고 생성 완료 및 매칭 전달", response);
+        return CommonResponse.created("구인공고 생성 완료 및 매칭 전달", response);
     }
 }

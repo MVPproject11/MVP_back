@@ -14,7 +14,7 @@ public record MatchingResponse(
         LocalTime responseDate,
         String message
 ) {
-    public MatchingResponse fromEntity(Matching matching, String msg) {
+    public static MatchingResponse fromEntity(Matching matching, String msg) {
         return new MatchingResponse(
                 matching.getId(),
                 matching.getMatchingStatus(),
