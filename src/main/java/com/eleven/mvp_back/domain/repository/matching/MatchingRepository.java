@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MatchingRepository extends JpaRepository<Matching, Long> {
     List<Matching> findAllByCaregiver_Id(Long caregiverId);
+    List<Matching> findAllByJobpostSocialworkerElderSocialWorkerId(Long socialworkerId);
 }
