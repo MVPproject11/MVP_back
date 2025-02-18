@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -39,9 +40,9 @@ public class Matching {
     private ProgressStatus progressStatus;
 
     @Column(nullable = false)
-    private LocalDateTime requestDate;
+    private LocalTime requestDate;
 
-    private LocalDateTime responseDate;
+    private LocalTime responseDate;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

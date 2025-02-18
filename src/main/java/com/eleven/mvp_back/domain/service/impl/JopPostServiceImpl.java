@@ -21,7 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Slf4j
@@ -66,7 +68,7 @@ public class JopPostServiceImpl implements JopPostService {
                     .caregiver(cg)
                     .matchingStatus(MatchingStatus.WAITING)
                     .progressStatus(ProgressStatus.WAITING)
-                    .requestDate(LocalDateTime.now())
+                    .requestDate(LocalTime.now())
                     .responseDate(null)
                     .createdAt(LocalDateTime.now())
                     .build();

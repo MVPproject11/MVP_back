@@ -2,6 +2,9 @@ package com.eleven.mvp_back.domain.controller;
 
 import com.eleven.mvp_back.common.CommonResponse;
 import com.eleven.mvp_back.domain.dto.request.matching.ProgressStatusRequest;
+import com.eleven.mvp_back.domain.dto.response.matching.CaregiverMatchingDetailResponse;
+import com.eleven.mvp_back.domain.dto.response.matching.CaregiverMatchingListResponse;
+import com.eleven.mvp_back.domain.dto.response.matching.MatchingResponse;
 import com.eleven.mvp_back.domain.enums.ProgressStatus;
 import com.eleven.mvp_back.domain.service.MatchingService;
 import jakarta.validation.Valid;
