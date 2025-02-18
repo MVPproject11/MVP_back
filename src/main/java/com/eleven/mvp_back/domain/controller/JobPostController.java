@@ -1,54 +1,41 @@
 package com.eleven.mvp_back.domain.controller;
 
-import com.eleven.mvp_back.domain.entity.JobPost;
-import com.eleven.mvp_back.domain.dto.JobPostDTO;
-import com.eleven.mvp_back.domain.service.JobPostService;
-import org.springframework.http.ResponseEntity;
+import com.eleven.mvp_back.common.CommonResponse;
+import com.eleven.mvp_back.domain.dto.request.jobpost.JobPostRequest;
+import com.eleven.mvp_back.domain.dto.response.jobpost.JobPostResponse;
+import com.eleven.mvp_back.domain.service.JopPostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
+@Tag(name = "구인공고 API", description = "사회복지사가 선택한 노인에 대한 구인공고를 등록하고 매칭을 생성하는 API")
 @RestController
-@RequestMapping("/api/jobposts")
+@RequestMapping("/api/elders/{elderId}")
+@RequiredArgsConstructor
 public class JobPostController {
 
-    private final JobPostService jobPostService;
+    private final JopPostService jopPostService;
 
-    public JobPostController(JobPostService jobPostService) {
-        this.jobPostService = jobPostService;
-    }
+    @Operation(summary = "구인공고 등록", description = "로그인된 사회복지사가 특정 노인에 대해 구인공고를 등록하고 매칭 요청을 전달합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "구인공고 생성 및 매칭 요청 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청"),
+            @ApiResponse(responseCode = "401", description = "인증되지 않음"),
+            @ApiResponse(responseCode = "403", description = "권한 없음"),
+            @ApiResponse(responseCode = "404", description = "노인 또는 사회복지사 매핑 정보 없음"),
+            @ApiResponse(responseCode = "500", description = "서버 내부 오류")
+    })
+    @PostMapping("/jobposts")
+    public CommonResponse<JobPostResponse> createJobPost(@AuthenticationPrincipal Long socialworkerId,
+                                                        @PathVariable Long elderId,
+                                                        @Valid @RequestBody JobPostRequest request) {
 
-    // 모든 구인공고 조회
-    @GetMapping
-    public ResponseEntity<List<JobPostDTO>> getAllJobPosts() {
-        return ResponseEntity.ok(jobPostService.getAllJobPosts());
-    }
-
-    // 특정 구인공고 조회
-    @GetMapping("/{jobpost_id}")
-    public ResponseEntity<JobPostDTO> getJobPostById(@PathVariable Long id) {
-        Optional<JobPostDTO> jobPost = jobPostService.getJobPostById(id);
-        return jobPost.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    // 구인공고 추가
-    @PostMapping
-    public ResponseEntity<JobPostDTO> createJobPost(@RequestBody JobPost jobPost) {
-        return ResponseEntity.ok(jobPostService.createJobPost(jobPost));
-    }
-
-    // 구인공고 수정
-    @PutMapping("/{jobpost_id}")
-    public ResponseEntity<JobPostDTO> updateJobPost(@PathVariable Long id, @RequestBody JobPost jobPost) {
-        Optional<JobPostDTO> updatedPost = jobPostService.updateJobPost(id, jobPost);
-        return updatedPost.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    // 구인공고 삭제
-    @DeleteMapping("/{jobpost_id}")
-    public ResponseEntity<Void> deleteJobPost(@PathVariable Long id) {
-        jobPostService.deleteJobPost(id);
-        return ResponseEntity.noContent().build();
+        JobPostResponse response = jopPostService.createJobPost(socialworkerId, elderId, request);
+        return CommonResponse.created("구인공고 생성 완료 및 매칭 전달", response);
     }
 }

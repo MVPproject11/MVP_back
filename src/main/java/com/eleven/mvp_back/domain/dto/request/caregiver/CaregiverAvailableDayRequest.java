@@ -1,7 +1,7 @@
 package com.eleven.mvp_back.domain.dto.request.caregiver;
 
-import com.eleven.mvp_back.domain.entity.Caregiver;
-import com.eleven.mvp_back.domain.entity.CaregiverAvailableDay;
+import com.eleven.mvp_back.domain.entity.caregiver.Caregiver;
+import com.eleven.mvp_back.domain.entity.caregiver.CaregiverAvailableDay;
 import com.eleven.mvp_back.domain.enums.Weekday;
 import jakarta.validation.constraints.NotNull;
 

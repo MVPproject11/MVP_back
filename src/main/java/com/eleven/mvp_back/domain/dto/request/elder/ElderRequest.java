@@ -1,6 +1,6 @@
 package com.eleven.mvp_back.domain.dto.request.elder;
 
-import com.eleven.mvp_back.domain.entity.Elder;
+import com.eleven.mvp_back.domain.entity.elder.Elder;
 import com.eleven.mvp_back.domain.enums.CareGrade;
 import com.eleven.mvp_back.domain.enums.Gender;
 import com.eleven.mvp_back.domain.enums.Housemate;

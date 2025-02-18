@@ -2,9 +2,13 @@ package com.eleven.mvp_back.domain.service.impl;
 
 import com.eleven.mvp_back.domain.dto.request.caregiver.CaregiverRequest;
 import com.eleven.mvp_back.domain.dto.response.caregiver.CaregiverResponse;
-import com.eleven.mvp_back.domain.entity.*;
+import com.eleven.mvp_back.domain.entity.caregiver.Caregiver;
+import com.eleven.mvp_back.domain.entity.caregiver.CaregiverAvailableDay;
+import com.eleven.mvp_back.domain.entity.caregiver.CaregiverLocation;
+import com.eleven.mvp_back.domain.entity.caregiver.Certification;
+import com.eleven.mvp_back.domain.entity.user.User;
 import com.eleven.mvp_back.domain.enums.Role;
-import com.eleven.mvp_back.domain.repository.UserRepository;
+import com.eleven.mvp_back.domain.repository.user.UserRepository;
 import com.eleven.mvp_back.domain.repository.caregiver.*;
 import com.eleven.mvp_back.domain.service.CaregiverService;
 import com.eleven.mvp_back.domain.service.FileUploadService;

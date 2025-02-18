@@ -1,7 +1,7 @@
 package com.eleven.mvp_back.domain.dto.request.caregiver;
 
-import com.eleven.mvp_back.domain.entity.Caregiver;
-import com.eleven.mvp_back.domain.entity.Certification;
+import com.eleven.mvp_back.domain.entity.caregiver.Caregiver;
+import com.eleven.mvp_back.domain.entity.caregiver.Certification;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
