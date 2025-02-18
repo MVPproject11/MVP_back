@@ -9,7 +9,7 @@ import com.eleven.mvp_back.domain.entity.socialworkerelder.SocialworkerElder;
 import com.eleven.mvp_back.domain.entity.socialworkerelder.SocialworkerElderId;
 import com.eleven.mvp_back.domain.enums.MatchingStatus;
 import com.eleven.mvp_back.domain.enums.ProgressStatus;
-import com.eleven.mvp_back.domain.repository.MatchingRepository;
+import com.eleven.mvp_back.domain.repository.matching.MatchingRepository;
 import com.eleven.mvp_back.domain.repository.elder.ElderRepository;
 import com.eleven.mvp_back.domain.repository.jobpost.JobPostRepository;
 import com.eleven.mvp_back.domain.repository.socialworker.SocialWorkerRepository;
@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
