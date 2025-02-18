@@ -53,6 +53,7 @@ public class Matching {
     public void updateStatus(ProgressStatus progressStatus, MatchingStatus matchingStatus) {
         this.progressStatus = progressStatus;
         this.matchingStatus = matchingStatus;
+        this.responseDate = LocalDate.now();
         this.updatedAt = LocalDateTime.now();
     }
 }
