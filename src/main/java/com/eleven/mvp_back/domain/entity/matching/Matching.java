@@ -41,7 +41,6 @@ public class Matching {
     @Column(nullable = false)
     private LocalDateTime requestDate;
 
-    @Column(nullable = false)
     private LocalDateTime responseDate;
 
     @Column(nullable = false)

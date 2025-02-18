@@ -17,12 +17,16 @@ import com.eleven.mvp_back.domain.repository.socialworkerelder.SocialworkerElder
 import com.eleven.mvp_back.domain.service.JopPostService;
 import com.eleven.mvp_back.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class JopPostServiceImpl implements JopPostService {
 
@@ -32,6 +36,7 @@ public class JopPostServiceImpl implements JopPostService {
     private final JobPostRepository jobPostRepository;
     private final MatchingRepository matchingRepository;
 
+    @Transactional
     @Override
     public JobPostResponse createJobPost(Long socialworkerId, Long elderId, JobPostRequest request) {
         socialWorkerRepository.findById(socialworkerId)
@@ -66,6 +71,7 @@ public class JopPostServiceImpl implements JopPostService {
                     .createdAt(LocalDateTime.now())
                     .build();
 
+            log.info("Caregiver ID: " + cg.getId() + ", Available Days: " + cg.getAvailableDays());
             matchingRepository.save(matching);
         }
 

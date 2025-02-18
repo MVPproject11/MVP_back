@@ -1,8 +1,8 @@
 package com.eleven.mvp_back.domain.repository.caregiver;
 
-import com.eleven.mvp_back.domain.entity.QCaregiverAvailableDay;
-import com.eleven.mvp_back.domain.entity.QCaregiverLocation;
-import com.eleven.mvp_back.domain.entity.QCertification;
+import com.eleven.mvp_back.domain.entity.caregiver.QCaregiverAvailableDay;
+import com.eleven.mvp_back.domain.entity.caregiver.QCaregiverLocation;
+import com.eleven.mvp_back.domain.entity.caregiver.QCertification;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 

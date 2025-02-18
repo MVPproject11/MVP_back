@@ -77,6 +77,7 @@ public class JobPost {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Builder.Default
     @OneToMany(mappedBy = "jobpost", cascade = CascadeType.ALL)
     private List<Matching> matchings = new ArrayList<>();
 }

@@ -1,9 +1,9 @@
 package com.eleven.mvp_back.domain.repository.jobpost;
 
-import com.eleven.mvp_back.domain.entity.QCaregiver;
-import com.eleven.mvp_back.domain.entity.QCaregiverAvailableDay;
-import com.eleven.mvp_back.domain.entity.QCaregiverLocation;
 import com.eleven.mvp_back.domain.entity.caregiver.Caregiver;
+import com.eleven.mvp_back.domain.entity.caregiver.QCaregiver;
+import com.eleven.mvp_back.domain.entity.caregiver.QCaregiverAvailableDay;
+import com.eleven.mvp_back.domain.entity.caregiver.QCaregiverLocation;
 import com.eleven.mvp_back.domain.entity.elder.Elder;
 import com.eleven.mvp_back.domain.entity.elder.ElderCareDays;
 import com.eleven.mvp_back.domain.enums.Weekday;
@@ -17,6 +17,8 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.querydsl.core.types.dsl.Expressions.numberTemplate;
 
 @RequiredArgsConstructor
 public class JobPostCustomRepositoryImpl implements JobPostCustomRepository{
@@ -63,7 +65,7 @@ public class JobPostCustomRepositoryImpl implements JobPostCustomRepository{
             return null;
         }
 
-        return stringContains(location.city, elderAddress);
+        return numberTemplate(Integer.class, "LOCATE({0}, {1})", location.city, elderAddress).gt(0);
     }
 
     private BooleanExpression stringContains(StringPath path, String elderAddress) {
