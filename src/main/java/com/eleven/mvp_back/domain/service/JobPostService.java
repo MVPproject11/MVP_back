@@ -1,8 +1,8 @@
 package com.eleven.mvp_back.domain.service;
 
-import com.eleven.mvp_back.domain.entity.JobPost;
+import com.eleven.mvp_back.domain.entity.jobpost.JobPost;
 import com.eleven.mvp_back.domain.dto.JobPostDTO;
-import com.eleven.mvp_back.domain.repository.JobPostRepository;
+import com.eleven.mvp_back.domain.repository.jobpost.JobPostRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;

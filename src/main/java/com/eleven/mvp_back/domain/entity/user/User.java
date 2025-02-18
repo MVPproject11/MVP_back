@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.domain.entity;
+package com.eleven.mvp_back.domain.entity.user;
 
 import com.eleven.mvp_back.domain.enums.Role;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.domain.entity;
+package com.eleven.mvp_back.domain.entity.elder;
 
 import com.eleven.mvp_back.domain.dto.response.elder.ElderMealAssistsResponse;
 import jakarta.persistence.*;

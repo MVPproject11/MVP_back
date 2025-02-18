@@ -1,5 +1,7 @@
-package com.eleven.mvp_back.domain.entity;
+package com.eleven.mvp_back.domain.entity.matching;
 
+import com.eleven.mvp_back.domain.entity.caregiver.Caregiver;
+import com.eleven.mvp_back.domain.entity.jobpost.JobPost;
 import com.eleven.mvp_back.domain.enums.MatchingStatus;
 import com.eleven.mvp_back.domain.enums.ProgressStatus;
 import jakarta.persistence.*;

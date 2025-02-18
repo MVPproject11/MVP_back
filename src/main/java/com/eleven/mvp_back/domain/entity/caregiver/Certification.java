@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.domain.entity;
+package com.eleven.mvp_back.domain.entity.caregiver;
 
 import com.eleven.mvp_back.domain.dto.response.caregiver.CertificationResponse;
 import jakarta.persistence.*;

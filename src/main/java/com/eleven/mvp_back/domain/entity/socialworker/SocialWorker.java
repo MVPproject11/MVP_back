@@ -1,6 +1,7 @@
-package com.eleven.mvp_back.domain.entity;
+package com.eleven.mvp_back.domain.entity.socialworker;
 
 import com.eleven.mvp_back.domain.dto.request.socialworker.SocialWorkerRequest;
+import com.eleven.mvp_back.domain.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

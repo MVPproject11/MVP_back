@@ -1,4 +1,4 @@
-package com.eleven.mvp_back.domain.entity;
+package com.eleven.mvp_back.domain.entity.socialworkerelder;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

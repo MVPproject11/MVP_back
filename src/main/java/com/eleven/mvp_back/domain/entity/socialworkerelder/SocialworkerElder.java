@@ -1,6 +1,8 @@
-package com.eleven.mvp_back.domain.entity;
+package com.eleven.mvp_back.domain.entity.socialworkerelder;
 
 import com.eleven.mvp_back.domain.dto.response.elder.SocialWorkerElderResponse;
+import com.eleven.mvp_back.domain.entity.elder.Elder;
+import com.eleven.mvp_back.domain.entity.socialworker.SocialWorker;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,6 +1,6 @@
 package com.eleven.mvp_back.domain.dto.response.socialworker;
 
-import com.eleven.mvp_back.domain.entity.SocialWorker;
+import com.eleven.mvp_back.domain.entity.socialworker.SocialWorker;
 
 public record SocialWorkerResponse(
         Long id,

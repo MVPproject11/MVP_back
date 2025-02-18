@@ -1,6 +1,6 @@
 package com.eleven.mvp_back.domain.controller;
 
-import com.eleven.mvp_back.domain.entity.JobPost;
+import com.eleven.mvp_back.domain.entity.jobpost.JobPost;
 import com.eleven.mvp_back.domain.dto.JobPostDTO;
 import com.eleven.mvp_back.domain.service.JobPostService;
 import org.springframework.http.ResponseEntity;

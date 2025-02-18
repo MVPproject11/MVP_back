@@ -1,7 +1,7 @@
-package com.eleven.mvp_back.domain.repository;
+package com.eleven.mvp_back.domain.repository.socialworker;
 
-import com.eleven.mvp_back.domain.entity.SocialWorker;
-import com.eleven.mvp_back.domain.entity.User;
+import com.eleven.mvp_back.domain.entity.socialworker.SocialWorker;
+import com.eleven.mvp_back.domain.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

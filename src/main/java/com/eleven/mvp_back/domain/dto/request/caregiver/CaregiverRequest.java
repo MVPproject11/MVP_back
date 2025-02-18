@@ -1,7 +1,7 @@
 package com.eleven.mvp_back.domain.dto.request.caregiver;
 
-import com.eleven.mvp_back.domain.entity.Caregiver;
-import com.eleven.mvp_back.domain.entity.User;
+import com.eleven.mvp_back.domain.entity.caregiver.Caregiver;
+import com.eleven.mvp_back.domain.entity.user.User;
 import com.eleven.mvp_back.domain.enums.Gender;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,7 +1,7 @@
 package com.eleven.mvp_back.domain.dto.request.elder;
 
-import com.eleven.mvp_back.domain.entity.Elder;
-import com.eleven.mvp_back.domain.entity.ElderCareDays;
+import com.eleven.mvp_back.domain.entity.elder.Elder;
+import com.eleven.mvp_back.domain.entity.elder.ElderCareDays;
 import com.eleven.mvp_back.domain.enums.Weekday;
 import jakarta.validation.constraints.NotNull;
 

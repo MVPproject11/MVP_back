@@ -1,5 +1,7 @@
-package com.eleven.mvp_back.domain.entity;
+package com.eleven.mvp_back.domain.entity.jobpost;
 
+import com.eleven.mvp_back.domain.entity.matching.Matching;
+import com.eleven.mvp_back.domain.entity.socialworkerelder.SocialworkerElder;
 import com.eleven.mvp_back.domain.enums.WorkType;
 import jakarta.persistence.*;
 import lombok.*;

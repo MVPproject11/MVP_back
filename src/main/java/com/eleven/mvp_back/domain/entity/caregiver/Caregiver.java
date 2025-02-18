@@ -1,7 +1,9 @@
-package com.eleven.mvp_back.domain.entity;
+package com.eleven.mvp_back.domain.entity.caregiver;
 
 import com.eleven.mvp_back.domain.dto.request.caregiver.CaregiverRequest;
 import com.eleven.mvp_back.domain.dto.response.caregiver.CaregiverResponse;
+import com.eleven.mvp_back.domain.entity.matching.Matching;
+import com.eleven.mvp_back.domain.entity.user.User;
 import com.eleven.mvp_back.domain.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
