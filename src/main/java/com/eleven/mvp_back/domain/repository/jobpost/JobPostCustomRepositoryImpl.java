@@ -3,7 +3,6 @@ package com.eleven.mvp_back.domain.repository.jobpost;
 import com.eleven.mvp_back.domain.entity.QCaregiver;
 import com.eleven.mvp_back.domain.entity.QCaregiverAvailableDay;
 import com.eleven.mvp_back.domain.entity.QCaregiverLocation;
-import com.eleven.mvp_back.domain.entity.QElderCareDays;
 import com.eleven.mvp_back.domain.entity.caregiver.Caregiver;
 import com.eleven.mvp_back.domain.entity.elder.Elder;
 import com.eleven.mvp_back.domain.entity.elder.ElderCareDays;

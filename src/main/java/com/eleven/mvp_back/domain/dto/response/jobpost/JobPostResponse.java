@@ -22,7 +22,7 @@ public record JobPostResponse(
         String managerEmail,
         String message
 ) {
-    public JobPostResponse fromEntity(JobPost jobPost, String message) {
+    public static JobPostResponse fromEntity(JobPost jobPost, String message) {
         if (jobPost == null) return null;
         return new JobPostResponse(
                 jobPost.getId(),
