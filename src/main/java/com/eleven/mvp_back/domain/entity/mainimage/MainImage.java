@@ -16,6 +16,5 @@ public class MainImage {
     @Column(name = "main_image_id")
     private Long id;
 
-
     private String mainPhoto;
 }
