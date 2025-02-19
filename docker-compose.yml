@@ -32,3 +32,10 @@ services:
       test: [ "CMD", "mysqladmin", "ping" ]
       interval: 5s
       retries: 10
+
+  eleven-front:
+    image: 831926627674.dkr.ecr.ap-northeast-2.amazonaws.com/eleven-front:latest
+    container_name: eleven-front
+    ports:
+      - "3000:80"
+    restart: always
