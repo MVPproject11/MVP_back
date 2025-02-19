@@ -30,9 +30,13 @@ public record CaregiverRequest(
         @NotNull(message = "치매 교육 여부는 필수 입력값입니다.")
         Boolean dementiaTraining,
 
-        @NotNull(message = "희망 시급은 필수 입력값입니다.")
+        @NotNull(message = "희망 최소 시급은 필수 입력값입니다.")
         @Min(value = 0, message = "희망 시급은 0 이상이어야 합니다.")
-        Integer desiredWage,
+        Integer minDesiredWage,
+
+        @NotNull(message = "희망 최대 시급은 필수 입력값입니다.")
+        @Min(value = 0, message = "희망 시급은 0 이상이어야 합니다.")
+        Integer maxDesiredWage,
 
         Integer careerPeriod,
 
@@ -63,7 +67,8 @@ public record CaregiverRequest(
                         .caregiverProfile(profileUrl)
                         .ownCar(ownCar())
                         .dementiaTraining(dementiaTraining())
-                        .desiredWage(desiredWage())
+                        .minDesireWage(minDesiredWage())
+                        .maxDesiredWage(maxDesiredWage())
                         .careerPeriod(careerPeriod())
                         .mainCareer(mainCareer())
                         .introduction(introduction())

@@ -51,7 +51,10 @@ public class Caregiver {
     private boolean dementiaTraining;
 
     @Column(nullable = false)
-    private Integer desiredWage;
+    private Integer minDesireWage;
+
+    @Column(nullable = false)
+    private Integer maxDesiredWage;
 
     private Integer careerPeriod;
 
@@ -94,7 +97,8 @@ public class Caregiver {
         this.phoneNumber = request.phoneNumber();
         this.ownCar = request.ownCar();
         this.dementiaTraining = request.dementiaTraining();
-        this.desiredWage = request.desiredWage();
+        this.minDesireWage = request.minDesiredWage();
+        this.maxDesiredWage = request.maxDesiredWage();
         this.careerPeriod = request.careerPeriod();
         this.mainCareer = request.mainCareer();
         this.introduction = request.introduction();
@@ -114,7 +118,8 @@ public class Caregiver {
                 this.getCaregiverProfile(),
                 this.isOwnCar(),
                 this.isDementiaTraining(),
-                this.getDesiredWage(),
+                this.getMinDesireWage(),
+                this.getMaxDesiredWage(),
                 this.getCareerPeriod(),
                 this.getMainCareer(),
                 this.getIntroduction(),
